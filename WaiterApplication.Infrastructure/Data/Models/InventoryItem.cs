@@ -20,6 +20,6 @@ namespace WaiterApplication.Infrastructure.Data.Models
         [Required]
         public int Quantity { get; set; }
         [Comment("Item unit of measurement: kg, l, mg, etc...")]
-        public string UnitOfMeasurement { get; set; }
+        public string? UnitOfMeasurement { get; set; }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using static WaiterApplication.Infrastructure.Constants.DataConstants;
 
 namespace WaiterApplication.Infrastructure.Data.Models
@@ -28,9 +29,10 @@ namespace WaiterApplication.Infrastructure.Data.Models
         public string Image { get; set; } = string.Empty;
         [Comment("Dish price")]
         [Required]
+        [Column(TypeName = "decimal(18,2)")]
         [Range(0.00, 1000.00, ErrorMessage = "Price {0} must be between {1} and {2}")]
         public decimal Price { get; set; }
         [Comment("Dish ingredients")]
-        public string Ingredients { get; set; }
+        public string? Ingredients { get; set; }
     }
 }
