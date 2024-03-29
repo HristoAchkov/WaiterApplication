@@ -11,7 +11,7 @@ using WaiterApplication.Infrastructure.Data;
 
 namespace WaiterApplication.Infrastructure.Migrations
 {
-    [DbContext(typeof(ApplicationDbContext))]
+    [DbContext(typeof(WaiterApplicationDbContext))]
     [Migration("20240329141129_InitialMigration")]
     partial class InitialMigration
     {
