@@ -9,5 +9,6 @@ namespace WaiterApplication.Infrastructure.Data
             : base(options)
         {
         }
+
     }
 }
