@@ -5,6 +5,10 @@ VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WaiterApplication", "WaiterApplication\WaiterApplication.csproj", "{158812B5-6E66-40D0-9363-91E8DAEA4ADF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WaiterApplication.Core", "WaiterApplication.Core\WaiterApplication.Core.csproj", "{1EBABF90-B117-4C4A-A7CD-20D8AAE48D16}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WaiterApplication.Infrastructure", "WaiterApplication.Infrastructure\WaiterApplication.Infrastructure.csproj", "{4A2E240F-959F-4336-A8BB-48722F2223E0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{158812B5-6E66-40D0-9363-91E8DAEA4ADF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{158812B5-6E66-40D0-9363-91E8DAEA4ADF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{158812B5-6E66-40D0-9363-91E8DAEA4ADF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1EBABF90-B117-4C4A-A7CD-20D8AAE48D16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1EBABF90-B117-4C4A-A7CD-20D8AAE48D16}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1EBABF90-B117-4C4A-A7CD-20D8AAE48D16}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1EBABF90-B117-4C4A-A7CD-20D8AAE48D16}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A2E240F-959F-4336-A8BB-48722F2223E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A2E240F-959F-4336-A8BB-48722F2223E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A2E240F-959F-4336-A8BB-48722F2223E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A2E240F-959F-4336-A8BB-48722F2223E0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
