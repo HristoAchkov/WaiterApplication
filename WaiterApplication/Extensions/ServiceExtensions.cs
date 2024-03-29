@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using WaiterApplication.Data;
+using WaiterApplication.Infrastructure.Data;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
