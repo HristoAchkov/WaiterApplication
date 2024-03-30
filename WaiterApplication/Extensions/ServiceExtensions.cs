@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using WaiterApplication.Infrastructure.Data;
+using WaiterApplication.Infrastructure.Data.Common;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -18,13 +19,20 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddDbContext<WaiterApplicationDbContext>(options =>
                 options.UseSqlServer(connectionString));
 
+            services.AddScoped<IRepository, Repository>();
+
             services.AddDatabaseDeveloperPageExceptionFilter();
 
             return services;
         }
         public static IServiceCollection AddApplicationIdentity(this IServiceCollection services, IConfiguration config)
         {
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddDefaultIdentity<IdentityUser>(options =>
+            {
+                options.SignIn.RequireConfirmedAccount = true;
+                options.Password.RequireDigit = true;
+                options.Password.RequireLowercase = true;
+            })
                 .AddEntityFrameworkStores<WaiterApplicationDbContext>();
 
             return services;
