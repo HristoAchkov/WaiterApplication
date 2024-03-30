@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using WaiterApplication.Core.Contracts;
+using WaiterApplication.Core.Services;
 using WaiterApplication.Infrastructure.Data;
 using WaiterApplication.Infrastructure.Data.Common;
 
@@ -9,7 +11,7 @@ namespace Microsoft.Extensions.DependencyInjection
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
-
+            services.AddScoped<IOrderService, OrderService>();
 
             return services;
         }
