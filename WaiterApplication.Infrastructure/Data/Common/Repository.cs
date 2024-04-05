@@ -9,16 +9,16 @@ namespace WaiterApplication.Infrastructure.Data.Common
 {
     public class Repository : IRepository
     {
-        private readonly DbContext _context;
+        private readonly DbContext context;
 
-        public Repository(WaiterApplicationDbContext context)
+        public Repository(WaiterApplicationDbContext _context)
         {
-            _context = context;
+            context = _context;
         }
 
         private DbSet<T> DbSet<T>() where T : class
         {
-            return _context.Set<T>();
+            return context.Set<T>();
         }
 
         public IQueryable<T> All<T>() where T : class
@@ -30,6 +30,16 @@ namespace WaiterApplication.Infrastructure.Data.Common
         {
             return DbSet<T>()
                 .AsNoTracking();
+        }
+
+        public async Task AddAsync<T>(T entity) where T : class
+        {
+            await DbSet<T>().AddAsync(entity);
+        }
+
+        public async Task<int> SaveChangesAsync()
+        {
+            return await context.SaveChangesAsync();
         }
     }
 }

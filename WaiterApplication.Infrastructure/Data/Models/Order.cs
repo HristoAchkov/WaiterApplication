@@ -16,6 +16,7 @@ namespace WaiterApplication.Infrastructure.Data.Models
         [Required]
         [Range(0,500, ErrorMessage = TableNumbersErrorMessage)]
         [DefaultValue(1)]
+        [Comment("Foreign Key Table Identifier")]
         public int TableNumber { get; set; }
         [ForeignKey(nameof(TableNumber))]
         public Table Table { get; set; } = null!;
