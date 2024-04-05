@@ -2,7 +2,6 @@
 using WaiterApplication.Core.Contracts;
 using WaiterApplication.Core.Models;
 using WaiterApplication.Extensions;
-using WaiterApplication.Infrastructure.Data.Models;
 
 namespace WaiterApplication.Controllers
 {
@@ -32,6 +31,10 @@ namespace WaiterApplication.Controllers
             if (await orderService.ExistsByIdAsync(User.Id()))
             {
                 return BadRequest();
+            }
+            if (!ModelState.IsValid)
+            {
+                return View(model);
             }
 
             await orderService.CreateAsync(model.OrderedDishes);
