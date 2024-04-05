@@ -13,6 +13,7 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<IDishService, DishService>();
+            services.AddScoped<IMenuService, MenuService>();
 
             return services;
         }
