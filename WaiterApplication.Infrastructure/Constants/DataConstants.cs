@@ -9,6 +9,7 @@ namespace WaiterApplication.Infrastructure.Constants
     public static class DataConstants
     {
         public const string TableNumbersErrorMessage = "Table numbers {0} must be between {1} and {2}";
+        public const string PriceRange = "Price {0} must be between {1} and {2}";
 
         public const int MinNameLength = 3;
         public const int MaxNameLength = 50;
