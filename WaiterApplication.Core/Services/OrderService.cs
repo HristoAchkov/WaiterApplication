@@ -3,6 +3,7 @@ using WaiterApplication.Core.Contracts;
 using WaiterApplication.Infrastructure.Data.Common;
 using WaiterApplication.Infrastructure.Data.Models;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Identity;
 
 namespace WaiterApplication.Core.Services
 {
