@@ -23,7 +23,6 @@ namespace WaiterApplication.Infrastructure.Data.Models
         [ForeignKey(nameof(DishId))]
         public Dish Dish { get; set; } = null!;
         [DefaultValue(1)]
-        [MaxLength(9)]
         public int Quantity { get; set; }
         public string? Comment { get; set; }
     }
