@@ -17,6 +17,7 @@ namespace WaiterApplication.Infrastructure.Data.Models
         [Comment("Is payment complete?")]
         [Required]
         public bool PaymentCompleted { get; set; }
+        [Required]
         public int OrderId { get; set; }
         [ForeignKey(nameof(OrderId))]
         public Order Order { get; set; } = null!;

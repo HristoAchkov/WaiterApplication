@@ -1,10 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using static WaiterApplication.Infrastructure.Constants.DataConstants;
 
 namespace WaiterApplication.Infrastructure.Data.Models
 {
@@ -15,6 +11,7 @@ namespace WaiterApplication.Infrastructure.Data.Models
         public int Id { get; set; }
         [Comment("Name of the table")]
         [Required]
+        [MaxLength(MaxTableNameLength)]
         public string TableName { get; set; } = string.Empty;
         [Comment("Capacity of the table")]
         [Required]

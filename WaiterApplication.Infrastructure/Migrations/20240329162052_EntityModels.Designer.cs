@@ -12,8 +12,8 @@ using WaiterApplication.Infrastructure.Data;
 namespace WaiterApplication.Infrastructure.Migrations
 {
     [DbContext(typeof(WaiterApplicationDbContext))]
-    [Migration("20240329141129_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20240329162052_EntityModels")]
+    partial class EntityModels
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -226,6 +226,181 @@ namespace WaiterApplication.Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("WaiterApplication.Infrastructure.Data.Models.Bill", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasComment("Bill Identifier");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("PaymentCompleted")
+                        .HasColumnType("bit")
+                        .HasComment("Is payment complete?");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderId");
+
+                    b.ToTable("Bills");
+                });
+
+            modelBuilder.Entity("WaiterApplication.Infrastructure.Data.Models.Dish", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasComment("Dish Identifier");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
+                        .HasComment("Brief dish description");
+
+                    b.Property<string>("Image")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
+                        .HasComment("Image URL");
+
+                    b.Property<string>("Ingredients")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasComment("Dish ingredients");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)")
+                        .HasComment("Dish name");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)")
+                        .HasComment("Dish price");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Dishes");
+                });
+
+            modelBuilder.Entity("WaiterApplication.Infrastructure.Data.Models.InventoryItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasComment("Inventory Item Identifier");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasComment("Name of the item");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int")
+                        .HasComment("Quantity of the item");
+
+                    b.Property<string>("UnitOfMeasurement")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasComment("Item unit of measurement: kg, l, mg, etc...");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("InventoryItems");
+                });
+
+            modelBuilder.Entity("WaiterApplication.Infrastructure.Data.Models.Order", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasComment("Order Identifier");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("TableNumber")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("TotalAmount")
+                        .HasColumnType("decimal(18,2)")
+                        .HasComment("Total amount of the ordered dishes");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TableNumber");
+
+                    b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("WaiterApplication.Infrastructure.Data.Models.OrderDish", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasComment("Ordered Dish Identifier");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Comment")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("DishId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasMaxLength(9)
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DishId");
+
+                    b.HasIndex("OrderId");
+
+                    b.ToTable("OrderDishes");
+                });
+
+            modelBuilder.Entity("WaiterApplication.Infrastructure.Data.Models.Table", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasComment("Table Identifier");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("Capacity")
+                        .HasColumnType("int")
+                        .HasComment("Capacity of the table");
+
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit")
+                        .HasComment("Vacant/Occupied table");
+
+                    b.Property<string>("TableName")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)")
+                        .HasComment("Name of the table");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Tables");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -275,6 +450,52 @@ namespace WaiterApplication.Infrastructure.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("WaiterApplication.Infrastructure.Data.Models.Bill", b =>
+                {
+                    b.HasOne("WaiterApplication.Infrastructure.Data.Models.Order", "Order")
+                        .WithMany()
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Order");
+                });
+
+            modelBuilder.Entity("WaiterApplication.Infrastructure.Data.Models.Order", b =>
+                {
+                    b.HasOne("WaiterApplication.Infrastructure.Data.Models.Table", "Table")
+                        .WithMany()
+                        .HasForeignKey("TableNumber")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Table");
+                });
+
+            modelBuilder.Entity("WaiterApplication.Infrastructure.Data.Models.OrderDish", b =>
+                {
+                    b.HasOne("WaiterApplication.Infrastructure.Data.Models.Dish", "Dish")
+                        .WithMany()
+                        .HasForeignKey("DishId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WaiterApplication.Infrastructure.Data.Models.Order", "Order")
+                        .WithMany("OrderedDishes")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Dish");
+
+                    b.Navigation("Order");
+                });
+
+            modelBuilder.Entity("WaiterApplication.Infrastructure.Data.Models.Order", b =>
+                {
+                    b.Navigation("OrderedDishes");
                 });
 #pragma warning restore 612, 618
         }

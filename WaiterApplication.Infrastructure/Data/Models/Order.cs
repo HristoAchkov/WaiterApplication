@@ -1,11 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using static WaiterApplication.Infrastructure.Constants.DataConstants;
 
 namespace WaiterApplication.Infrastructure.Data.Models
 {
@@ -17,6 +14,9 @@ namespace WaiterApplication.Infrastructure.Data.Models
         [Comment("Total amount of the ordered dishes")]
         public decimal TotalAmount { get; set; }
         [Required]
+        [Range(0,500, ErrorMessage = TableNumbersErrorMessage)]
+        [DefaultValue(1)]
+        [Comment("Foreign Key Table Identifier")]
         public int TableNumber { get; set; }
         [ForeignKey(nameof(TableNumber))]
         public Table Table { get; set; } = null!;
