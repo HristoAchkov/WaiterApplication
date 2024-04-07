@@ -24,7 +24,7 @@ namespace WaiterApplication.Controllers
         {
             if (await menuService.DishExistsAsync(User.Id()))
             {
-                return RedirectToAction("Index", nameof(MenuController));
+                return RedirectToAction("Index",nameof(HomeController));
             }
 
             var model = new CreateDishModel();
@@ -34,11 +34,12 @@ namespace WaiterApplication.Controllers
 
         [HttpPost]
         [DishNotInTheMenu]
+        //Should redirect to All()
         public async Task<IActionResult> AddDishToMenu(CreateDishModel model)
         {
             if (await menuService.DishExistsAsync(User.Id()))
             {
-                return RedirectToAction("Index", nameof(MenuController));
+                return RedirectToAction("Index",nameof(HomeController));
             }
             if (!ModelState.IsValid)
             {
@@ -51,7 +52,12 @@ namespace WaiterApplication.Controllers
                 model.Price,
                 model.Ingredients);
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(AddDishToMenu));
+        }
+
+        public IActionResult All()
+        {
+            return View();
         }
 
         public IActionResult Index()
