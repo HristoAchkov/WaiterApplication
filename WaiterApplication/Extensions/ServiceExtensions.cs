@@ -12,8 +12,9 @@ namespace Microsoft.Extensions.DependencyInjection
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
             services.AddScoped<IOrderService, OrderService>();
-            services.AddScoped<IDishService, DishService>();
             services.AddScoped<IMenuService, MenuService>();
+            services.AddScoped<ITableService, TableService>();
+            services.AddScoped<IBillingService, BillingService>();
 
             return services;
         }
@@ -33,7 +34,7 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             services.AddDefaultIdentity<IdentityUser>(options =>
             {
-                options.SignIn.RequireConfirmedAccount = true;
+                options.SignIn.RequireConfirmedAccount = false;
                 options.Password.RequireDigit = true;
                 options.Password.RequireLowercase = true;
             })
