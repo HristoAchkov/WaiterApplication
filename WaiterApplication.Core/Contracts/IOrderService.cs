@@ -11,5 +11,6 @@ namespace WaiterApplication.Core.Contracts
     {
         Task<bool> ExistsByIdAsync(string id);
         Task CreateAsync(ICollection<OrderDish> ordered);
+
     }
 }

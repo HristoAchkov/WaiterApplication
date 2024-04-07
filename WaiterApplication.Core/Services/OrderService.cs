@@ -31,5 +31,10 @@ namespace WaiterApplication.Core.Services
             return await repository.AllAsNoTracking<Order>()
                 .AnyAsync(o => o.Id.ToString() == id);
         }
+
+        public async Task<bool> ItemExistsByIdAsync()
+        {
+            return true;
+        }
     }
 }

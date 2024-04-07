@@ -19,7 +19,7 @@ namespace WaiterApplication.Core.Services
             repository = _repository;
         }
 
-        public async Task AddDishAsync(string name, string description, string imageUrl, decimal price, string? ingredients)
+        public async Task AddDishAsync(string name, string description, string? imageUrl, decimal price, string? ingredients)
         {
             var dish = new Dish()
             {
