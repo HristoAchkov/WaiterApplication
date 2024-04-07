@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 using static WaiterApplication.Infrastructure.Constants.DataConstants;
 
 namespace WaiterApplication.Infrastructure.Data.Models
@@ -23,10 +24,9 @@ namespace WaiterApplication.Infrastructure.Data.Models
         [MaxLength(MaxDescriptionLength)]
         public string Description { get; set; } = string.Empty;
         [Comment("Image URL")]
-        [Required]
-        [Url]
         [MaxLength(MaxUrlLength)]
-        public string Image { get; set; } = string.Empty;
+        [AllowNull]
+        public string Image { get; set; }
         [Comment("Dish price")]
         [Required]
         [Column(TypeName = "decimal(18,2)")]
