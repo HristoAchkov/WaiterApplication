@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WaiterApplication.Core.Contracts;
-using WaiterApplication.Core.Models;
+using WaiterApplication.Core.Models.ViewModel;
 using WaiterApplication.Extensions;
 
 namespace WaiterApplication.Controllers
