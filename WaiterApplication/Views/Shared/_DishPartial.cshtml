@@ -1,0 +1,33 @@
+﻿@using WaiterApplication.Core.Models.QueryModels﻿;
+@model AllDishesServiceModel
+@{
+    ViewBag.Title = "All Dishes";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+<div class="row">
+        <div class="col-md-4">
+            <div class="card mb-3">
+                 @if (!string.IsNullOrEmpty(@Model.Image))
+                {
+                    <img class="card-img-top" src="@Model.Image" alt="Dish Image">
+                }
+                <div class="card-body text-center">
+                    <h4>@Model.Name</h4>
+                    <p>@Model.Description</p>
+                    <h6>Price: <b>@String.Format("{0:f2}", @Model.Price)</b></h6>
+                    @* Add your logic for Ingredients display here *@
+                    @if (!string.IsNullOrEmpty(@Model.Ingredients))
+                    {
+                        <h6>Ingredients:</h6>
+                        <p>@Model.Ingredients</p>
+                    }
+                    <br />
+                    @*a asp-controller="Dish" asp-action="Details" asp-route-id="@dish.Id"
+                       class="btn btn-success">Details</a>*@
+                    @* Add your logic for Edit, Delete, Rent, Leave buttons here *@
+                </div>
+            </div>
+        </div>
