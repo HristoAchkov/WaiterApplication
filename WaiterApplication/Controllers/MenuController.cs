@@ -1,9 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Runtime.CompilerServices;
 using WaiterApplication.Attributes;
 using WaiterApplication.Core.Contracts;
 using WaiterApplication.Core.Models;
+using WaiterApplication.Core.Models.QueryModels;
+using WaiterApplication.Core.Models.ViewModel;
 using WaiterApplication.Core.Services;
 using WaiterApplication.Extensions;
 
@@ -34,7 +37,6 @@ namespace WaiterApplication.Controllers
 
         [HttpPost]
         [DishNotInTheMenu]
-        //Should redirect to All()
         public async Task<IActionResult> AddDishToMenu(CreateDishModel model)
         {
             if (await menuService.DishExistsAsync(User.Id()))
@@ -52,12 +54,22 @@ namespace WaiterApplication.Controllers
                 model.Price,
                 model.Ingredients);
 
-            return RedirectToAction(nameof(AddDishToMenu));
+            return RedirectToAction(nameof(All));
         }
 
-        public IActionResult All()
+        [HttpGet]
+        public async Task<IActionResult> All([FromQuery] AllDishesQueryModel model)
         {
-            return View();
+            var dishes = await menuService.AllAsync(
+                model.SearchTerm,
+                model.Sorting,
+                model.CurrentPage,
+                model.DishesPerPage);
+
+            model.TotalDishesCount = dishes.TotalDishesCount;
+            model.Dishes = dishes.Dishes;
+
+            return View(model);
         }
 
         public IActionResult Index()
