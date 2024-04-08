@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WaiterApplication.Core.Contracts;
+using WaiterApplication.Core.Enumerations;
+using WaiterApplication.Core.Models.QueryModels;
 using WaiterApplication.Infrastructure.Data.Common;
 using WaiterApplication.Infrastructure.Data.Models;
 
@@ -32,6 +34,54 @@ namespace WaiterApplication.Core.Services
 
             await repository.AddAsync(dish);
             await repository.SaveChangesAsync();
+        }
+
+        public async Task<AllDishesQueryModel> AllAsync(
+           string? searchTerm = null,
+           DishSorting sorting = DishSorting.Name,
+           int currentPage = 1,
+           int housesPerPage = 1)
+        {
+            var dishesToShow = repository.AllAsNoTracking<Dish>();
+
+            if (searchTerm != null)
+            {
+                string normalizedSearchTerm = searchTerm.ToLower();
+                dishesToShow = dishesToShow
+                    .Where(h => (h.Name.ToLower().Contains(normalizedSearchTerm)));
+            }
+
+            dishesToShow = sorting switch
+            {
+                DishSorting.Name => dishesToShow
+                    .OrderBy(h => h.Name),
+                DishSorting.Price => dishesToShow
+                    .OrderBy(h => h.Price),
+                _ => dishesToShow
+                    .OrderByDescending(h => h.Id)
+            };
+
+            var dishes = await dishesToShow
+                .Skip((currentPage) * housesPerPage)
+                .Take(housesPerPage)
+                .Select(d => new AllDishesServiceModel
+                {
+                    Id = d.Id,
+                    Name = d.Name,
+                    Description = d.Description,
+                    Price = d.Price,
+                    Image = d.Image,
+                    Ingredients = d.Ingredients
+                })
+                .ToListAsync();
+
+            int totalDishes = await dishesToShow.CountAsync();
+
+            return new AllDishesQueryModel()
+            {
+                Dishes = dishes,
+                TotalDishesCount = totalDishes
+            };
         }
 
         public async Task<bool> DishExistsAsync(string dishId)
