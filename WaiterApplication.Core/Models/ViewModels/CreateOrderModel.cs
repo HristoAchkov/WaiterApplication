@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WaiterApplication.Infrastructure.Data.Models;
 
-namespace WaiterApplication.Core.Models
+namespace WaiterApplication.Core.Models.ViewModel
 {
     public class CreateOrderModel
     {

@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
 using static WaiterApplication.Infrastructure.Constants.DataConstants;
 
-namespace WaiterApplication.Core.Models
+namespace WaiterApplication.Core.Models.ViewModel
 {
     public class CreateDishModel
     {
