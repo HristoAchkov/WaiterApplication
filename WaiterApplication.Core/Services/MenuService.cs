@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using WaiterApplication.Core.Contracts;
 using WaiterApplication.Core.Enumerations;
 using WaiterApplication.Core.Models.QueryModels;
+using WaiterApplication.Core.Models.ViewModel;
 using WaiterApplication.Core.Models.ViewModels;
 using WaiterApplication.Infrastructure.Data.Common;
 using WaiterApplication.Infrastructure.Data.Models;
@@ -105,6 +106,20 @@ namespace WaiterApplication.Core.Services
         {
             return await repository.AllAsNoTracking<Dish>()
                 .AnyAsync(d => d.Id.ToString() == dishId);
+        }
+
+        public async Task EditAsync(int dishId, DishFormModel model)
+        {
+            var dish = await repository.GetByIdAsync<Dish>(dishId);
+
+            if (dish != null)
+            {
+                dish.Name = model.Name;
+                dish.Image = model.Image;
+                dish.Price = model.Price;
+                dish.Ingredients = model.Ingredients;
+            }
+            await repository.SaveChangesAsync();
         }
     }
 }

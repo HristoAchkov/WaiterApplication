@@ -1,13 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WaiterApplication.Core.Enumerations;
+﻿using WaiterApplication.Core.Enumerations;
 using WaiterApplication.Core.Models.QueryModels;
+using WaiterApplication.Core.Models.ViewModel;
 using WaiterApplication.Core.Models.ViewModels;
-using WaiterApplication.Infrastructure.Data.Common;
 
 namespace WaiterApplication.Core.Contracts
 {
@@ -21,5 +15,6 @@ namespace WaiterApplication.Core.Contracts
              int currentPage = 1,
              int housesPerPage = 1);
         Task<DishDetailsServiceModel> DishDetailsByIdAsync(int id);
+        Task EditAsync(int dishId, DishFormModel model);
     }
 }

@@ -8,7 +8,7 @@ using static WaiterApplication.Infrastructure.Constants.DataConstants;
 
 namespace WaiterApplication.Core.Models.ViewModel
 {
-    public class CreateDishModel
+    public class DishFormModel
     {
         [Required]
         [MinLength(MinNameLength)]
