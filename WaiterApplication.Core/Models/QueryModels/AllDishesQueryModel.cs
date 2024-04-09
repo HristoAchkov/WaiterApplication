@@ -16,7 +16,7 @@ namespace WaiterApplication.Core.Models.QueryModels
         public string SearchTerm { get; set; } = string.Empty;
 
         public DishSorting Sorting { get; set; }
-        public int CurrentPage { get; set; }
+        public int CurrentPage { get; set; } = 1;
         public int TotalDishesCount { get; set; }
         public IEnumerable<AllDishesServiceModel> Dishes { get; set; } = new List<AllDishesServiceModel>();
     }

@@ -1,10 +1,6 @@
 ﻿@using WaiterApplication.Core.Models.QueryModels﻿;
 @model AllDishesServiceModel
-@{
-    ViewBag.Title = "All Dishes";
-}
 
-<h2 class="text-center">@ViewBag.Title</h2>
 <hr />
 
 <div class="row">
@@ -25,8 +21,8 @@
                         <p>@Model.Ingredients</p>
                     }
                     <br />
-                    @*a asp-controller="Dish" asp-action="Details" asp-route-id="@dish.Id"
-                       class="btn btn-success">Details</a>*@
+                    <a asp-controller="Menu" asp-action="Details" asp-route-id="@Model.Id"
+                       class="btn btn-success">Details</a>
                     @* Add your logic for Edit, Delete, Rent, Leave buttons here *@
                 </div>
             </div>
