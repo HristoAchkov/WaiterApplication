@@ -30,14 +30,14 @@ namespace WaiterApplication.Controllers
                 return RedirectToAction("Index",nameof(HomeController));
             }
 
-            var model = new CreateDishModel();
+            var model = new DishFormModel();
 
             return View(model);
         }
 
         [HttpPost]
         [DishNotInTheMenu]
-        public async Task<IActionResult> AddDishToMenu(CreateDishModel model)
+        public async Task<IActionResult> AddDishToMenu(DishFormModel model)
         {
             if (await menuService.DishExistsAsync(User.Id()))
             {
@@ -71,7 +71,7 @@ namespace WaiterApplication.Controllers
 
             return View(model);
         }
-
+        [HttpGet]
         public async Task<IActionResult> Details(int id)
         {
             if (await menuService.DishExistsAsync(id.ToString()) == false)
@@ -82,6 +82,44 @@ namespace WaiterApplication.Controllers
             var model = await menuService.DishDetailsByIdAsync(id);
 
             return View(model);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+            if (!await menuService.DishExistsAsync(id.ToString()))
+            {
+                return BadRequest();
+            }
+
+            var dish = await menuService.DishDetailsByIdAsync(id);
+            var model = new DishFormModel()
+            {
+                Name = dish.Name,
+                Description = dish.Description,
+                Image = dish.Image,
+                Price = dish.Price,
+                Ingredients = dish.Ingredients
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(int id,DishFormModel model)
+        {
+            if (!await menuService.DishExistsAsync(id.ToString()))
+            {
+                return BadRequest();
+            }
+            if (ModelState.IsValid == false)
+            {
+                return View(model);
+            }
+
+            await menuService.EditAsync(id, model);
+
+            return RedirectToAction(nameof(All));
         }
 
         public IActionResult Index()
