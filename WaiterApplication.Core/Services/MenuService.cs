@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using WaiterApplication.Core.Contracts;
 using WaiterApplication.Core.Enumerations;
 using WaiterApplication.Core.Models.QueryModels;
+using WaiterApplication.Core.Models.ViewModels;
 using WaiterApplication.Infrastructure.Data.Common;
 using WaiterApplication.Infrastructure.Data.Models;
 
@@ -62,7 +63,7 @@ namespace WaiterApplication.Core.Services
             };
 
             var dishes = await dishesToShow
-                .Skip((currentPage) * housesPerPage)
+                .Skip((currentPage - 1) * housesPerPage)
                 .Take(housesPerPage)
                 .Select(d => new AllDishesServiceModel
                 {
@@ -82,6 +83,22 @@ namespace WaiterApplication.Core.Services
                 Dishes = dishes,
                 TotalDishesCount = totalDishes
             };
+        }
+
+        public async Task<DishDetailsServiceModel> DishDetailsByIdAsync(int id)
+        {
+            return await repository.AllAsNoTracking<Dish>()
+                .Where(d => d.Id == id)
+                .Select(d => new DishDetailsServiceModel()
+                {
+                    Id = d.Id,
+                    Name = d.Name,
+                    Description = d.Description,
+                    Image = d.Image,
+                    Price = d.Price,
+                    Ingredients = d.Ingredients
+                })
+                .FirstAsync();
         }
 
         public async Task<bool> DishExistsAsync(string dishId)

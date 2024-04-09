@@ -72,6 +72,18 @@ namespace WaiterApplication.Controllers
             return View(model);
         }
 
+        public async Task<IActionResult> Details(int id)
+        {
+            if (await menuService.DishExistsAsync(id.ToString()) == false)
+            {
+                return BadRequest();
+            }
+
+            var model = await menuService.DishDetailsByIdAsync(id);
+
+            return View(model);
+        }
+
         public IActionResult Index()
         {
             return View();
