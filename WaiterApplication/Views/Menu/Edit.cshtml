@@ -2,12 +2,12 @@
 
 @model DishFormModel
 @{
-    ViewBag.Title = "Create Dish";
+    ViewBag.Title = "Edit Dish";
 }
 
 <h1 class="text-center">@ViewBag.Title</h1>
 
-<form asp-action="AddDishToMenu" method="post" enctype="multipart/form-data">
+<form asp-action="Edit" method="post" enctype="multipart/form-data">
     <div class="form-group">
         <label asp-for="@Model.Name">Name</label>
         <input asp-for="@Model.Name" class="form-control" aria-required="true"/>
@@ -33,7 +33,7 @@
         <textarea asp-for="@Model.Ingredients" class="form-control"></textarea>
         <span asp-validation-for="@Model.Ingredients" class="text-danger"></span>
     </div>
-    <button type="submit" class="btn btn-primary">Create Dish</button>
+    <button type="submit" class="btn btn-primary">Edit Dish</button>
 </form>
 
 @section Scripts {
