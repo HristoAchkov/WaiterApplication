@@ -86,6 +86,12 @@ namespace WaiterApplication.Core.Services
             };
         }
 
+        public async Task DeleteAsync(int id)
+        {
+            await repository.RemoveAsync<Dish>(id);
+            await repository.SaveChangesAsync();
+        }
+
         public async Task<DishDetailsServiceModel> DishDetailsByIdAsync(int id)
         {
             return await repository.AllAsNoTracking<Dish>()

@@ -7,6 +7,7 @@ using WaiterApplication.Core.Contracts;
 using WaiterApplication.Core.Models;
 using WaiterApplication.Core.Models.QueryModels;
 using WaiterApplication.Core.Models.ViewModel;
+using WaiterApplication.Core.Models.ViewModels;
 using WaiterApplication.Core.Services;
 using WaiterApplication.Extensions;
 
@@ -120,6 +121,39 @@ namespace WaiterApplication.Controllers
             await menuService.EditAsync(id, model);
 
             return RedirectToAction(nameof(Details), new { id });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(int id)
+        {
+            if (await menuService.DishExistsAsync(id.ToString()) == false)
+            {
+                return BadRequest();
+            }
+
+            var dish = await menuService.DishDetailsByIdAsync(id);
+            var model = new DishRemoveViewModel()
+            {
+                Id = dish.Id,
+                Name = dish.Name,
+                Image = dish.Image,
+                Price = dish.Price
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteConfirmed(DishRemoveViewModel model, int id)
+        {
+            if (await menuService.DishExistsAsync(model.Id.ToString()) == false)
+            {
+                return BadRequest();
+            }
+
+            await menuService.DeleteAsync(model.Id);
+
+            return RedirectToAction(nameof(All));
         }
 
         public IActionResult Index()

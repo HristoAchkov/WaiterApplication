@@ -22,7 +22,7 @@
         }
     </div>
     <div class="card-footer">
-        <form asp-action="RemoveDish" asp-route-id="@Model.Id" method="post">
+        <form asp-action="Delete" asp-route-id="@Model.Id" method="get">
             <button type="submit" class="btn btn-danger">Remove</button>
         </form>
         <form asp-action="Edit" asp-route-id="@Model.Id" method="get">

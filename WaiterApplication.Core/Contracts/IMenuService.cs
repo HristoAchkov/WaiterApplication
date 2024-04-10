@@ -16,5 +16,6 @@ namespace WaiterApplication.Core.Contracts
              int housesPerPage = 1);
         Task<DishDetailsServiceModel> DishDetailsByIdAsync(int id);
         Task EditAsync(int dishId, DishFormModel model);
+        Task DeleteAsync(int id);
     }
 }

@@ -42,7 +42,7 @@ namespace WaiterApplication.Infrastructure.Data.Common
             return await context.SaveChangesAsync();
         }
 
-        public async Task RemoveAsync<T>(object id  ) where T : class
+        public async Task RemoveAsync<T>(object id ) where T : class
         {
             T? entity = await GetByIdAsync<T>(id);
 
