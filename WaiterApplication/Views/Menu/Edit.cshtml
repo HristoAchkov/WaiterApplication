@@ -7,7 +7,7 @@
 
 <h1 class="text-center">@ViewBag.Title</h1>
 
-<form asp-action="Edit" method="post" enctype="multipart/form-data">
+<form asp-action="Edit" method="post">
     <div class="form-group">
         <label asp-for="@Model.Name">Name</label>
         <input asp-for="@Model.Name" class="form-control" aria-required="true"/>

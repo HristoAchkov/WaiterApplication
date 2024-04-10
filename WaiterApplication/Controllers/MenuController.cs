@@ -87,7 +87,7 @@ namespace WaiterApplication.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            if (!await menuService.DishExistsAsync(id.ToString()))
+            if (await menuService.DishExistsAsync(id.ToString()) == false)
             {
                 return BadRequest();
             }
@@ -108,7 +108,7 @@ namespace WaiterApplication.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(int id,DishFormModel model)
         {
-            if (!await menuService.DishExistsAsync(id.ToString()))
+            if (await menuService.DishExistsAsync(id.ToString()) == false)
             {
                 return BadRequest();
             }
@@ -119,7 +119,7 @@ namespace WaiterApplication.Controllers
 
             await menuService.EditAsync(id, model);
 
-            return RedirectToAction(nameof(All));
+            return RedirectToAction(nameof(Details), new { id });
         }
 
         public IActionResult Index()
