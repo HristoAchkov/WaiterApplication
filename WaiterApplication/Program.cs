@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Mvc;
 using WaiterApplication.ModelBinders;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,6 +9,7 @@ builder.Services.AddApplicationIdentity(builder.Configuration);
 builder.Services.AddControllersWithViews(options =>
 {
     options.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
+    options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
 });
 
 builder.Services.AddApplicationServices();
@@ -22,7 +24,7 @@ if (app.Environment.IsDevelopment())
 else
 {
     app.UseExceptionHandler("/Home/Error/500");
-    app.UseStatusCodePagesWithReExecute("/Home/Error?statusCode={0}");
+    app.UseStatusCodePagesWithReExecute("/Home/Error", "?statusCode={0}");
     app.UseHsts();
 }
 
@@ -34,7 +36,15 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapDefaultControllerRoute();
-app.MapRazorPages();
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllerRoute(
+        name: "Dish Details",
+        pattern: "/Menu/Details/{id}/{information}",
+        defaults: new { Controller = "Menu", Action = "Details"}
+        );
+    app.MapDefaultControllerRoute();
+    app.MapRazorPages();
+});
 
-app.Run();
+app.RunAsync();

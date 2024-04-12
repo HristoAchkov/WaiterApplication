@@ -4,11 +4,12 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
+using WaiterApplication.Core.Contracts;
 using static WaiterApplication.Infrastructure.Constants.DataConstants;
 
 namespace WaiterApplication.Core.Models.ViewModel
 {
-    public class DishFormModel
+    public class DishFormModel : IDishModel
     {
         [Required]
         [MinLength(MinNameLength)]

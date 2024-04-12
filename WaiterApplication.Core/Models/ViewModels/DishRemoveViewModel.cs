@@ -6,10 +6,11 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WaiterApplication.Core.Contracts;
 
 namespace WaiterApplication.Core.Models.ViewModels
 {
-    public class DishRemoveViewModel
+    public class DishRemoveViewModel : IDishModel
     {
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;

@@ -5,11 +5,12 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WaiterApplication.Core.Contracts;
 using static WaiterApplication.Infrastructure.Constants.DataConstants;
 
 namespace WaiterApplication.Core.Models.QueryModels
 {
-    public class AllDishesServiceModel
+    public class AllDishesServiceModel : IDishModel
     {
         public int Id { get; set; }
         [Required]
