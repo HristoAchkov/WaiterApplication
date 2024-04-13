@@ -10,7 +10,7 @@ using WaiterApplication.Core.Contracts;
 
 namespace WaiterApplication.Core.Models.ViewModels
 {
-    public class DishRemoveViewModel : IDishModel
+    public class DishRemoveViewModel
     {
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;

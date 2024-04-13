@@ -1,7 +1,13 @@
 using Microsoft.AspNetCore.Mvc;
 using WaiterApplication.ModelBinders;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using WaiterApplication.Infrastructure.Data;
 
 var builder = WebApplication.CreateBuilder(args);
+var connectionString = builder.Configuration.GetConnectionString("WaiterApplicationDbContextConnection") ?? throw new InvalidOperationException("Connection string 'WaiterApplicationDbContextConnection' not found.");
+
+
 
 builder.Services.AddApplicationDbContext(builder.Configuration);
 builder.Services.AddApplicationIdentity(builder.Configuration);

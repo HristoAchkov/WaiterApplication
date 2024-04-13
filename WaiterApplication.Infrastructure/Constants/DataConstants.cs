@@ -22,5 +22,11 @@ namespace WaiterApplication.Infrastructure.Constants
         public const int MaxTableNameLength = 30;
 
         public const int MaxOrderDishQuantity = 9;
+
+        public const int UserFirstNameMaxLength = 30;
+        public const int UserFirstNameMinLength = 1;
+
+        public const int UserLastNameMaxLength = 40;
+        public const int UserLastNameMinLength = 3;
     }
 }

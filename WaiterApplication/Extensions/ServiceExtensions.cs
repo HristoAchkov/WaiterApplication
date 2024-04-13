@@ -4,6 +4,7 @@ using WaiterApplication.Core.Contracts;
 using WaiterApplication.Core.Services;
 using WaiterApplication.Infrastructure.Data;
 using WaiterApplication.Infrastructure.Data.Common;
+using WaiterApplication.Infrastructure.Data.Models;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -32,7 +33,7 @@ namespace Microsoft.Extensions.DependencyInjection
         }
         public static IServiceCollection AddApplicationIdentity(this IServiceCollection services, IConfiguration config)
         {
-            services.AddDefaultIdentity<IdentityUser>(options =>
+            services.AddDefaultIdentity<ApplicationUser>(options =>
             {
                 options.SignIn.RequireConfirmedAccount = false;
                 options.Password.RequireDigit = true;
