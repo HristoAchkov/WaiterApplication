@@ -28,5 +28,7 @@ namespace WaiterApplication.Infrastructure.Constants
 
         public const int UserLastNameMaxLength = 40;
         public const int UserLastNameMinLength = 3;
+
+        public const string AdminRole = "Administrator";
     }
 }

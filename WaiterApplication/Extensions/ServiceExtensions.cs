@@ -39,6 +39,7 @@ namespace Microsoft.Extensions.DependencyInjection
                 options.Password.RequireDigit = true;
                 options.Password.RequireLowercase = true;
             })
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<WaiterApplicationDbContext>();
 
             return services;

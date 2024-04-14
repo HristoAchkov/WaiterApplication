@@ -13,6 +13,7 @@ using WaiterApplication.Extensions;
 
 namespace WaiterApplication.Controllers
 {
+    [Authorize(Roles = "Administrator")]
     public class MenuController : BaseController
     {
         private readonly IMenuService menuService;
