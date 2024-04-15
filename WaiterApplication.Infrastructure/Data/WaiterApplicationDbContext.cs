@@ -4,7 +4,7 @@ using WaiterApplication.Infrastructure.Data.Models;
 
 namespace WaiterApplication.Infrastructure.Data
 {
-    public class WaiterApplicationDbContext : IdentityDbContext
+    public class WaiterApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public WaiterApplicationDbContext(DbContextOptions<WaiterApplicationDbContext> options)
             : base(options)
@@ -12,7 +12,6 @@ namespace WaiterApplication.Infrastructure.Data
         }
 
         public DbSet<Order> Orders { get; set; } = null!;
-
         public DbSet<Dish> Dishes { get; set; } = null!;
         public DbSet<Table> Tables { get; set; } = null!;
         public DbSet<Bill> Bills { get; set; } = null!;

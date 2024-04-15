@@ -3,6 +3,7 @@ using WaiterApplication.Core.Contracts;
 using WaiterApplication.Infrastructure.Data.Common;
 using WaiterApplication.Infrastructure.Data.Models;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Identity;
 
 namespace WaiterApplication.Core.Services
 {
@@ -29,6 +30,11 @@ namespace WaiterApplication.Core.Services
         {
             return await repository.AllAsNoTracking<Order>()
                 .AnyAsync(o => o.Id.ToString() == id);
+        }
+
+        public async Task<bool> ItemExistsByIdAsync()
+        {
+            return true;
         }
     }
 }

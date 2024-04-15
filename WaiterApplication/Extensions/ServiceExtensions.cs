@@ -4,6 +4,7 @@ using WaiterApplication.Core.Contracts;
 using WaiterApplication.Core.Services;
 using WaiterApplication.Infrastructure.Data;
 using WaiterApplication.Infrastructure.Data.Common;
+using WaiterApplication.Infrastructure.Data.Models;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -12,7 +13,9 @@ namespace Microsoft.Extensions.DependencyInjection
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
             services.AddScoped<IOrderService, OrderService>();
-            services.AddScoped<IDishService, DishService>();
+            services.AddScoped<IMenuService, MenuService>();
+            services.AddScoped<ITableService, TableService>();
+            services.AddScoped<IBillingService, BillingService>();
 
             return services;
         }
@@ -30,12 +33,13 @@ namespace Microsoft.Extensions.DependencyInjection
         }
         public static IServiceCollection AddApplicationIdentity(this IServiceCollection services, IConfiguration config)
         {
-            services.AddDefaultIdentity<IdentityUser>(options =>
+            services.AddDefaultIdentity<ApplicationUser>(options =>
             {
-                options.SignIn.RequireConfirmedAccount = true;
+                options.SignIn.RequireConfirmedAccount = false;
                 options.Password.RequireDigit = true;
                 options.Password.RequireLowercase = true;
             })
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<WaiterApplicationDbContext>();
 
             return services;

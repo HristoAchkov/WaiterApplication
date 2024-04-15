@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace WaiterApplication.Core.Contracts
 {
-    public interface IDishService
+    public interface IDishModel
     {
+        public string Name { get; set; }
+        public string Description { get; set; }
     }
 }

@@ -1,0 +1,32 @@
+﻿@using WaiterApplication.Core.Models.ViewModels
+@model DishDetailsServiceModel
+
+@{
+    ViewData["Title"] = "Dish Details";
+}
+
+<h1 class="text-center">@ViewBag.Title</h1>
+
+<div class="card">
+    @if (!string.IsNullOrEmpty(Model.Image))
+    {
+        <img src="@Model.Image" class="card-img-top" alt="Dish Image">
+    }
+    <div class="card-body">
+        <h5 class="card-title">@Model.Name</h5>
+        <p class="card-text">@Model.Description</p>
+        <p class="card-text">Price: @Model.Price.ToString("C2")</p>
+        @if (!string.IsNullOrEmpty(Model.Ingredients))
+        {
+            <p class="card-text">Ingredients: @Model.Ingredients</p>
+        }
+    </div>
+    <div class="card-footer">
+        <form asp-action="Delete" asp-route-id="@Model.Id" method="get">
+            <button type="submit" class="btn btn-danger">Remove</button>
+        </form>
+        <form asp-action="Edit" asp-route-id="@Model.Id" method="get">
+            <button type="submit" class="btn btn-warning">Edit</button>
+        </form>
+    </div>
+</div>

@@ -7,7 +7,7 @@ using WaiterApplication.Core.Contracts;
 
 namespace WaiterApplication.Core.Services
 {
-    public class DishService : IDishService
+    public class TableService : ITableService
     {
     }
 }
