@@ -8,9 +8,11 @@ using WaiterApplication.Infrastructure.Data.Models;
 
 namespace WaiterApplication.Core.Models.ViewModel
 {
-    public class CreateOrderModel
+    public class OrderFormModel
     {
         [Display(Name = "Dish")]
-        public ICollection<OrderDish> OrderedDishes { get; set; } = new List<OrderDish>();
+        public ICollection<Dish> OrderedDishes { get; set; } = new List<Dish>();
+        [Display(Name = "Optional Comment")]
+        public string? Comment { get; set; }
     }
 }

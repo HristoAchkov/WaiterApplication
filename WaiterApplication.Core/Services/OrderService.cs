@@ -4,6 +4,7 @@ using WaiterApplication.Infrastructure.Data.Common;
 using WaiterApplication.Infrastructure.Data.Models;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
+using WaiterApplication.Core.Models.ViewModels;
 
 namespace WaiterApplication.Core.Services
 {
@@ -16,7 +17,20 @@ namespace WaiterApplication.Core.Services
             repository = _repository;
         }
 
-        public async Task CreateAsync(ICollection<OrderDish> ordered)
+        public async Task<List<AllOrdersViewModel>> AllOrdersAsync()
+        {
+            var allOrders = repository.AllAsNoTracking<Order>()
+                .Select(o => new AllOrdersViewModel()
+                {
+                    TableNumber = o.Table.TableName,
+                    TotalAmount = o.TotalAmount
+                })
+                .ToListAsync();
+
+            return await allOrders;
+        }
+
+        public async Task CreateAsync(ICollection<Dish> ordered)
         {
             await repository.AddAsync(new Order()
             {

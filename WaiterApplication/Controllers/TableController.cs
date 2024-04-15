@@ -24,7 +24,7 @@ namespace WaiterApplication.Controllers
         {
             if (await tableService.TableExistsAsync(User.Id()))
             {
-                return RedirectToAction("All", nameof(TableController));
+                return RedirectToAction("All");
             }
 
             var model = new TableViewModel();
@@ -36,7 +36,7 @@ namespace WaiterApplication.Controllers
         {
             if (await tableService.TableExistsAsync(User.Id()))
             {
-                return RedirectToAction("All", nameof(TableController));
+                return RedirectToAction("All");
             }
             if (!ModelState.IsValid)
             {
@@ -46,7 +46,7 @@ namespace WaiterApplication.Controllers
                 model.Capacity,
                 model.Status);
 
-            return RedirectToAction("All", nameof(TableController));
+            return RedirectToAction("All");
         }
         [HttpGet]
         public async Task<IActionResult> RemoveTable(int tableId)
@@ -76,7 +76,7 @@ namespace WaiterApplication.Controllers
             }
             await tableService.RemoveTable(model.Id);
 
-            return RedirectToAction("All", nameof(TableController));
+            return RedirectToAction("All");
         }
         [HttpGet]
         public async Task<IActionResult> TableDetails(int tableId)

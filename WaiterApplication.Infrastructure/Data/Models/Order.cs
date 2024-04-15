@@ -12,7 +12,10 @@ namespace WaiterApplication.Infrastructure.Data.Models
         [Key]
         public int Id { get; set; }
         [Comment("Total amount of the ordered dishes")]
-        public decimal TotalAmount { get; set; }
+        public decimal TotalAmount 
+        {
+            get => OrderedDishes.Sum(x => x.Price);
+        }
         [Required]
         [Range(0,500, ErrorMessage = TableNumbersErrorMessage)]
         [DefaultValue(1)]
@@ -21,6 +24,6 @@ namespace WaiterApplication.Infrastructure.Data.Models
         [ForeignKey(nameof(TableNumber))]
         public Table Table { get; set; } = null!;
 
-        public ICollection<OrderDish> OrderedDishes { get; set; } = new List<OrderDish>();
+        public ICollection<Dish> OrderedDishes { get; set; } = new List<Dish>();
     }
 }

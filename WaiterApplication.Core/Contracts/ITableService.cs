@@ -10,5 +10,6 @@ namespace WaiterApplication.Core.Contracts
         Task<bool> TableExistsAsync(string tableId);
         Task RemoveTable(int id);
         Task<TableViewModel> TableDetailsByIdAsync(int id);
+        Task<bool> IsTableTaken(int id);
     }
 }

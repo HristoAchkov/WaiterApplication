@@ -37,13 +37,13 @@ namespace WaiterApplication.Core.Services
             return await tablesToShow;
         }
 
-        public async Task CreateTableAsync(string name, int capacity, bool status = false)
+        public async Task CreateTableAsync(string name, int capacity, bool status)
         {
             var table = new Table()
             {
                 TableName = name,
                 Capacity = capacity,
-                Status = false
+                Status = status
             };
 
             await repository.AddAsync<Table>(table);
@@ -73,6 +73,13 @@ namespace WaiterApplication.Core.Services
         {
             return await repository.AllAsNoTracking<Table>()
                 .AnyAsync(t => t.Id.ToString() == tableId);
+        }
+
+        public async Task<bool> IsTableTaken(int id)
+        {
+            var table = await repository.GetByIdAsync<Table>(id);
+
+            return table.Status;
         }
     }
 }
