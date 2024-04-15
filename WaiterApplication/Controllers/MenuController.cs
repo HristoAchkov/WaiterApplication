@@ -24,7 +24,6 @@ namespace WaiterApplication.Controllers
 
         [HttpGet]
         [DishNotInTheMenu]
-        //Admin only
         public async Task<IActionResult> AddDishToMenu()
         {
             if (await menuService.DishExistsAsync(User.Id()))

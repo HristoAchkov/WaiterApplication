@@ -5,9 +5,6 @@ using Microsoft.EntityFrameworkCore;
 using WaiterApplication.Infrastructure.Data;
 
 var builder = WebApplication.CreateBuilder(args);
-var connectionString = builder.Configuration.GetConnectionString("WaiterApplicationDbContextConnection") ?? throw new InvalidOperationException("Connection string 'WaiterApplicationDbContextConnection' not found.");
-
-
 
 builder.Services.AddApplicationDbContext(builder.Configuration);
 builder.Services.AddApplicationIdentity(builder.Configuration);
@@ -45,9 +42,14 @@ app.UseAuthorization();
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllerRoute(
-        name: "Dish Details",
-        pattern: "/Menu/Details/{id}/{information}",
-        defaults: new { Controller = "Menu", Action = "Details"}
+    name: "Dish Details",
+    pattern: "/Menu/Details/{id}/{information}",
+    defaults: new { Controller = "Menu", Action = "Details" }
+    );
+    endpoints.MapControllerRoute(
+        name: "All Dishes",
+        "/Table/All",
+        defaults: new { Controller = "Table", Action = "All" }
         );
     app.MapDefaultControllerRoute();
     app.MapRazorPages();

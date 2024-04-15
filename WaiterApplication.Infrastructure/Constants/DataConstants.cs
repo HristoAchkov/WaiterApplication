@@ -30,5 +30,10 @@ namespace WaiterApplication.Infrastructure.Constants
         public const int UserLastNameMinLength = 3;
 
         public const string AdminRole = "Administrator";
+
+        public const int TableNameMinLength = 1;
+
+        public const int MinTableCapacity = 2;
+        public const int MaxTableCapacity = 20;
     }
 }

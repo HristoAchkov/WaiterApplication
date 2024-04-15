@@ -1,0 +1,25 @@
+﻿@model TableViewModel
+
+@{
+    ViewBag.Title = "Table Details";
+}
+
+<h2>@ViewBag.Title</h2>
+<hr />
+
+<div>
+    <dl class="dl-horizontal" "text-center"">
+        <dt>Name</dt>
+        <dd>@Model.Name</dd>
+        <dt>Capacity</dt>
+        <dd>@Model.Capacity</dd>
+    </dl>
+</div>
+
+@if (User.IsInRole("Administrator"))
+{
+    <div>
+        <a href="@Url.Action("Edit", "Table", new { id = Model.Id })" class="btn btn-primary">Edit</a>
+        <a href="@Url.Action("RemoveTable", "Table", new { tableId = Model.Id })" class="btn btn-danger">Delete</a>
+    </div>
+}
