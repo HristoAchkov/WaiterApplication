@@ -81,7 +81,6 @@ namespace WaiterApplication.Controllers
         [HttpGet]
         public async Task<IActionResult> TableDetails(int tableId)
         {
-
             var table = await tableService.TableDetailsByIdAsync(tableId);
 
             return View(table);

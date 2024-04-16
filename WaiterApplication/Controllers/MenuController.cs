@@ -10,10 +10,11 @@ using WaiterApplication.Core.Models.ViewModel;
 using WaiterApplication.Core.Models.ViewModels;
 using WaiterApplication.Core.Services;
 using WaiterApplication.Extensions;
+using static WaiterApplication.Infrastructure.Constants.DataConstants;
 
 namespace WaiterApplication.Controllers
 {
-    [Authorize(Roles = "Administrator")]
+    [Authorize(Roles = AdminRole)]
     public class MenuController : BaseController
     {
         private readonly IMenuService menuService;
