@@ -28,6 +28,7 @@
             <h5 class="card-title">@table.Name</h5>
             <p class="card-text">Capacity: @table.Capacity</p>
             <p class="card-text">Status: @(table.Status ? "Occupied" : "Available")</p>
+             <a href="@Url.Action("CreateOrder", "Order", new { tableId = table.Id })" class="btn btn-primary">Create Order</a>
         </div>
     </div>
 }
