@@ -8,5 +8,7 @@ namespace WaiterApplication.Core.Contracts
 {
     public interface IBillingService
     {
+        Task<decimal> CalculateBill(decimal total);
+        Task InitiatePayment();
     }
 }
