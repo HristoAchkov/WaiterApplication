@@ -1,8 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 using WaiterApplication.ModelBinders;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using WaiterApplication.Infrastructure.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,10 +20,14 @@ if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
     app.UseMigrationsEndPoint();
+    app.UseExceptionHandler("/Home/Error/500");
+    app.UseExceptionHandler("/Home/Error/404");
+    app.UseStatusCodePagesWithReExecute("/Home/Error", "?statusCode={0}");
 }
 else
 {
     app.UseExceptionHandler("/Home/Error/500");
+    app.UseExceptionHandler("/Home/Error/404");
     app.UseStatusCodePagesWithReExecute("/Home/Error", "?statusCode={0}");
     app.UseHsts();
 }
