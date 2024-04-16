@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WaiterApplication.Infrastructure.Data;
 
@@ -11,9 +12,10 @@ using WaiterApplication.Infrastructure.Data;
 namespace WaiterApplication.Infrastructure.Migrations
 {
     [DbContext(typeof(WaiterApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240415162530_migration23")]
+    partial class migration23
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -273,7 +275,6 @@ namespace WaiterApplication.Infrastructure.Migrations
                         .HasComment("Brief dish description");
 
                     b.Property<string>("Image")
-                        .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)")
                         .HasComment("Image URL");
