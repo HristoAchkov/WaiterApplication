@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static WaiterApplication.Infrastructure.Constants.DataConstants;
 
 namespace WaiterApplication.Infrastructure.Data.Models
 {
@@ -15,6 +16,8 @@ namespace WaiterApplication.Infrastructure.Data.Models
         public int Id { get; set; }
         [Comment("Name of the item")]
         [Required]
+        [MaxLength(InventoryItemMaxLength)]
+        [MinLength(InventoryItemMinLength)]
         public string Name { get; set; } = string.Empty;
         [Comment("Quantity of the item")]
         [Required]

@@ -27,7 +27,13 @@
         </li>
         <li class="nav-item">
             <a class="nav-link text-dark" asp-area="" asp-controller="Table" asp-action="All">All Tables</a>
-            </li>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="Inventory" asp-action="All">All Items</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="Inventory" asp-action="CreateItem">Create Item</a>
+        </li>
         
         @if (User.IsInRole("Administrator"))
         {

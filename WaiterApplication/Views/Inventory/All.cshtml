@@ -1,0 +1,35 @@
+﻿@model List<InventoryItemViewModel>
+
+@{
+    ViewBag.Title = "Inventory Items";
+}
+
+<h2>@ViewBag.Title</h2>
+<hr />
+
+@if (Model.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Quantity</th>
+                <th>Unit of Measurement</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Name</td>
+                    <td>@item.Quantity</td>
+                    <td>@item.UnitOfMeasurement</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No inventory items found.</p>
+}

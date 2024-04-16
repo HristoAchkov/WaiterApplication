@@ -35,5 +35,8 @@ namespace WaiterApplication.Infrastructure.Constants
 
         public const int MinTableCapacity = 2;
         public const int MaxTableCapacity = 20;
+
+        public const int InventoryItemMinLength = 2;
+        public const int InventoryItemMaxLength = 40;
     }
 }
