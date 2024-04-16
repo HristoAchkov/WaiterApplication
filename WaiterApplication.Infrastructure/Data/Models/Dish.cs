@@ -25,7 +25,7 @@ namespace WaiterApplication.Infrastructure.Data.Models
         public string Description { get; set; } = string.Empty;
         [Comment("Image URL")]
         [MaxLength(MaxUrlLength)]
-        public string? Image { get; set; }
+        public string Image { get; set; } = string.Empty;
         [Comment("Dish price")]
         [Required]
         [Column(TypeName = "decimal(18,2)")]

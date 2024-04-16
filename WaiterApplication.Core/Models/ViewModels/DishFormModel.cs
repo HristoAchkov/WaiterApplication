@@ -21,8 +21,7 @@ namespace WaiterApplication.Core.Models.ViewModel
         [MaxLength(MaxDescriptionLength)]
         public string Description { get; set; } = string.Empty;
         [MaxLength(MaxUrlLength)]
-        [AllowNull]
-        public string Image { get; set; }
+        public string Image { get; set; } = string.Empty;
         [Required]
         [Range(0.00, 1000.00, ErrorMessage = PriceRange)]
         public decimal Price { get; set; }

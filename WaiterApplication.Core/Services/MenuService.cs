@@ -23,7 +23,7 @@ namespace WaiterApplication.Core.Services
             repository = _repository;
         }
 
-        public async Task AddDishAsync(string name, string description, string? imageUrl, decimal price, string? ingredients)
+        public async Task AddDishAsync(string name, string description, string imageUrl, decimal price, string? ingredients)
         {
             var dish = new Dish()
             {
@@ -126,6 +126,20 @@ namespace WaiterApplication.Core.Services
                 dish.Ingredients = model.Ingredients;
             }
             await repository.SaveChangesAsync();
+        }
+
+        public async Task<List<AllDishesServiceModel>> TableAllAsync()
+        {
+            var dishesToShow = await repository.AllAsNoTracking<Dish>()
+                .Select(x => new AllDishesServiceModel
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    Price = x.Price,
+                    Image = x.Image
+                }).ToListAsync();
+
+            return dishesToShow;
         }
     }
 }

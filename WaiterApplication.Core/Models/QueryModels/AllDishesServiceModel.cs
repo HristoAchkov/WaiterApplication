@@ -17,7 +17,8 @@ namespace WaiterApplication.Core.Models.QueryModels
         public string Name { get; set; } = string.Empty;
         [Required]
         public string Description { get; set; } = string.Empty;
-        public string? Image { get; set; }
+        [Required]
+        public string Image { get; set; } = string.Empty;
         [Required]
         public decimal Price { get; set; }
         public string? Ingredients { get; set; }

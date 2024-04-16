@@ -12,7 +12,7 @@ namespace WaiterApplication.Core.Models.QueryModels
     public class AllDishesQueryModel
     {
         public int DishesPerPage { get; } = 6;
-        [Display(Name = "SearchTerm by text")]
+        [Display(Name = "Search Term")]
         public string SearchTerm { get; set; } = string.Empty;
 
         public DishSorting Sorting { get; set; }
