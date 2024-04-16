@@ -1,0 +1,32 @@
+﻿@model List<AddDishToOrderViewModel>
+
+@{
+    ViewBag.Title = "Create Order";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="~/css/CreateOrder.css" />
+</head>
+
+<<h2>Create Order</h2>
+<hr />
+
+<form method="post" action="@Url.Action("CreateOrder", "Order")">
+    <h4>Select Dishes:</h4>
+    <div class="dish-grid">
+        @foreach (var dish in Model)
+        {
+            <div class="dish-item">
+                <label>
+                    <input type="checkbox" name="OrderedDishes" value="@dish.Name">
+                    <div>@dish.Name - @dish.Price</div>
+                </label>
+                <div class="comment-box">
+                    <input type="text" name="Comments[@dish.Comment]" placeholder="Add optional comment">
+                </div>
+            </div>
+        }
+    </div>
+    <button type="submit" class="btn btn-primary">Create Order</button>
+</form>
