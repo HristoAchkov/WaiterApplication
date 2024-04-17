@@ -1,36 +1,37 @@
-﻿@model List<AddDishToOrderViewModel>
+﻿@*@model List<AddDishToOrderViewModel>
 
 @{
     ViewBag.Title = "Create Order";
 }
+
 <!DOCTYPE html>
 <html>
 <head>
     <link rel="stylesheet" href="~/css/CreateOrder.css" />
 </head>
+<body>
 
-<<h2>Create Order</h2>
+<h2>Create Order</h2>
 <hr />
 
-<form method="post" action="@Url.Action("PlaceOrder", "Order")">
-    <h4>Select Dishes:</h4>
-    <div class="dish-grid">
-        @foreach (var dish in Model)
-        {
-            <div class="dish-item">
-                <label>
-                    <input type="checkbox" name="OrderedDishes" value="@dish.Id">
-                    <div>@dish.Name - @dish.Price</div>
-                </label>
+@foreach (var dish in Model)
+{
+    <form id="form-@dish.Id" method="post" action="@Url.Action("PlaceOrder", "Order")">
+        <input type="hidden" name="OrderedDishes" value="@dish.Id">
+        <div class="dish-item" onclick="document.getElementById('form-@dish.Id').submit()">
+            <label>
+                @dish.Name - @dish.Price
                 <div class="comment-box">
-                    <input type="text" name="Comments[@dish.Id]" placeholder="Add optional comment">
+                    <input type="text" name="Comments" placeholder="Add optional comment">
                 </div>
-            </div>
-        }
-    </div>
-    <button type="submit" class="btn btn-primary">Create Order</button>
-</form>
+            </label>
+        </div>
+    </form>
+}
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
+
+</body>
+</html>*@

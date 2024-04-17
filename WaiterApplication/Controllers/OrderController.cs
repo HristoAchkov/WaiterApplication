@@ -1,9 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Humanizer.Localisation.DateToOrdinalWords;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Logging;
 using NuGet.Protocol.Core.Types;
 using NuGet.Versioning;
+using System.Collections.Immutable;
 using WaiterApplication.Core.Contracts;
+using WaiterApplication.Core.Enumerations;
 using WaiterApplication.Core.Models.ViewModels;
+using WaiterApplication.Core.Services;
+using WaiterApplication.Infrastructure.Data.Models;
 
 namespace WaiterApplication.Controllers
 {
@@ -12,7 +18,6 @@ namespace WaiterApplication.Controllers
         private readonly IOrderService orderService;
         private readonly ITableService tableService;
         private readonly IMenuService menuService;
-
         public OrderController(IOrderService _orderService,
             ITableService _tableService,
             IMenuService _menuService)
@@ -28,6 +33,7 @@ namespace WaiterApplication.Controllers
 
             return View(model);
         }
+
         [HttpGet]
         public async Task<IActionResult> GetOrderTable()
         {
@@ -37,60 +43,48 @@ namespace WaiterApplication.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> CreateOrder(int tableId)
+        public async Task<IActionResult> CreateOrderNew(int tableId)
         {
-            var table = await tableService.TableDetailsByIdAsync(tableId);
-
-            if (await tableService.TableExistsAsync(table.Id.ToString()) == false)
+            var availableDishes = await menuService.TableAllAsync();
+            var model = new OrderFormModel
             {
-                return BadRequest();
-            }
-
-            if (table.Status == true)
-            {
-                return BadRequest();
-            }
-
-            table.Status = true;
-            var allDishesAvailable = await menuService.TableAllAsync();
-
-            List<AddDishToOrderViewModel> model = allDishesAvailable
-                .Select(x => new AddDishToOrderViewModel
+                TableId = tableId,
+                AvailableDishes = availableDishes.Select(dish => new AddDishToOrderViewModel
                 {
-                    Id = x.Id,
-                    Name = x.Name,
-                    Image = x.Image,
-                    Price = x.Price,
-                }).ToList();
+                    Id = dish.Id,
+                    Name = dish.Name,
+                    Price = dish.Price,
+                    Image = dish.Image
+                }).ToList()
+            };
 
             return View(model);
         }
+
         [HttpPost]
-        public async Task<IActionResult> PlaceOrder(List<AddDishToOrderViewModel> model,[FromQuery] int tableId)
+        public async Task<IActionResult> CreateOrder(int dishId, int tableId)
         {
-            if (await tableService.TableExistsAsync(tableId.ToString()) == false)
-            {
-                return BadRequest();
-            }
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
 
-            var order = new OrderFormModel();
-            foreach (var item in model)
+            OrderDish dish = new OrderDish()
             {
-                // Perform any necessary operations on each item
-            }
+                DishId = dishId,
+                OrderId = 1,
+                Quantity = 1
+            };
 
-            // Redirect to a success page or return a view
-            return RedirectToAction(nameof(All)); // Replace "ActionName" with the appropriate action
+            var orderId = await orderService.CreateOrderAsync(tableId, dish);
+
+            await orderService.AddDishToOrderAsync(orderId, dish.Id);
+
+            return RedirectToAction("OrderConfirmation", new { orderId });
+
         }
-        //[HttpPost]
-        //public async Task<IActionResult> OrderConfirmation(List<AddDishToOrderViewModel> model)
-        //{
-        //    await orderService.CreateAsync(model);
-        //    return RedirectToAction(nameof(All));
-        //}
+
+        [HttpGet]
+        public async Task<IActionResult> OrderConfirmation(int orderId)
+        {
+            var order = await orderService.GetOrderDetailsAsync(orderId);
+            return View(order);
+        }
     }
 }

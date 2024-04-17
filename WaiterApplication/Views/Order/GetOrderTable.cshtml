@@ -1,0 +1,37 @@
+﻿@model List<TableViewModel>
+
+@{
+    ViewBag.Title = "All Tables";
+}
+<style>
+    .card {
+        margin-bottom: 20px;
+    }
+
+    .available {
+        box-shadow: 0 0 10px green;
+    }
+
+    .occupied {
+        box-shadow: 0 0 10px red;
+    }
+</style>
+
+<h2>All Tables</h2>
+<hr />
+
+@foreach (var table in Model)
+{
+    <a href="@Url.Action("CreateOrderNew", "Order", new { tableId = table.Id })" class="card @(table.Status ? "occupied" : "available")" style="cursor: pointer; text-decoration: none;">
+        <div class="card-body">
+            <h5 class="card-title">@table.Name</h5>
+            <p class="card-text">Capacity: @table.Capacity</p>
+            <p class="card-text">Status: @(table.Status ? "Occupied" : "Available")</p>
+        </div>
+    </a>
+}
+
+@if (!Model.Any())
+{
+    <p>No tables found.</p>
+}
