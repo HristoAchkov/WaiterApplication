@@ -10,9 +10,7 @@ namespace WaiterApplication.Core.Models.ViewModels
 {
     public class OrderFormModel
     {
-        [Display(Name = "Dish")]
-        public ICollection<AddDishToOrderViewModel> OrderedDishes { get; set; } = new List<AddDishToOrderViewModel>();
-        [Display(Name = "Optional Comment")]
-        public ICollection<string>? Comments { get; set; } = new List<string>();
+        public int TableId { get; set; }
+        public ICollection<AddDishToOrderViewModel> AvailableDishes { get; set; } = new List<AddDishToOrderViewModel>();
     }
 }
