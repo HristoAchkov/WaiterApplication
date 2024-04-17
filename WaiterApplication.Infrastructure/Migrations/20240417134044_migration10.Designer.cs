@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WaiterApplication.Infrastructure.Data;
 
@@ -11,9 +12,10 @@ using WaiterApplication.Infrastructure.Data;
 namespace WaiterApplication.Infrastructure.Migrations
 {
     [DbContext(typeof(WaiterApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240417134044_migration10")]
+    partial class migration10
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -288,16 +290,11 @@ namespace WaiterApplication.Infrastructure.Migrations
                         .HasColumnType("nvarchar(50)")
                         .HasComment("Dish name");
 
-                    b.Property<int?>("OrderId")
-                        .HasColumnType("int");
-
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)")
                         .HasComment("Dish price");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("OrderId");
 
                     b.ToTable("Dishes");
                 });
@@ -470,13 +467,6 @@ namespace WaiterApplication.Infrastructure.Migrations
                     b.Navigation("Order");
                 });
 
-            modelBuilder.Entity("WaiterApplication.Infrastructure.Data.Models.Dish", b =>
-                {
-                    b.HasOne("WaiterApplication.Infrastructure.Data.Models.Order", null)
-                        .WithMany("OrderedDishes")
-                        .HasForeignKey("OrderId");
-                });
-
             modelBuilder.Entity("WaiterApplication.Infrastructure.Data.Models.Order", b =>
                 {
                     b.HasOne("WaiterApplication.Infrastructure.Data.Models.Table", "Table")
@@ -497,7 +487,7 @@ namespace WaiterApplication.Infrastructure.Migrations
                         .IsRequired();
 
                     b.HasOne("WaiterApplication.Infrastructure.Data.Models.Order", "Order")
-                        .WithMany()
+                        .WithMany("OrderedDishes")
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
