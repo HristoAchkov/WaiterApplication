@@ -4,12 +4,12 @@
     ViewBag.Title = "Table Details";
 }
 
-<h2>@ViewBag.Title</h2>
+<h2 class="text-center"">@ViewBag.Title</h2>
 <hr />
 
-<div>
-    <dl class="dl-horizontal" "text-center"">
-        <dt>Name</dt>
+<div class="text-center"> 
+    <dl class="dl-horizontal">
+        <dt><h4>Name</h4></dt> 
         <dd>@Model.Name</dd>
         <dt>Capacity</dt>
         <dd>@Model.Capacity</dd>
@@ -18,9 +18,8 @@
 
 @if (User.IsInRole("Administrator"))
 {
-    <div>
-        <a href="@Url.Action("Edit", "Table", new { id = Model.Id })" class="btn btn-primary">Edit</a>
+    <div class="text-center mt-3"> <!-- Added text-center class for centering -->
+        <a href="@Url.Action("Edit", "Table", new { tableId = Model.Id })" class="btn btn-primary">Edit</a>
         <a href="@Url.Action("RemoveTable", "Table", new { tableId = Model.Id })" class="btn btn-danger">Delete</a>
-        <a href="@Url.Action("CreateOrder", "Order", new { tableId = Model.Id })" class="btn btn-danger">Create Order</a>
     </div>
 }

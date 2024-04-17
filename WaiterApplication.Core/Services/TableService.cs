@@ -81,5 +81,18 @@ namespace WaiterApplication.Core.Services
 
             return table.Status;
         }
+
+        public async Task EditAsync(TableViewModel model)
+        {
+            var table = await repository.GetByIdAsync<Table>(model.Id);
+
+            if (table != null)
+            {
+                table.TableName = model.Name;
+                table.Capacity = model.Capacity;
+                table.Status = model.Status;
+            }
+            await repository.SaveChangesAsync();
+        }
     }
 }

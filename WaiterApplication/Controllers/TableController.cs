@@ -85,5 +85,39 @@ namespace WaiterApplication.Controllers
 
             return View(table);
         }
+        [HttpGet]
+        public async Task<IActionResult> Edit(int tableId)
+        {
+            if (await tableService.TableExistsAsync(tableId.ToString()) == false)
+            {
+                return BadRequest();
+            }
+            var tableToEdit = await tableService.TableDetailsByIdAsync(tableId);
+            var model = new TableViewModel()
+            {
+                Id = tableToEdit.Id,
+                Name = tableToEdit.Name,
+                Capacity = tableToEdit.Capacity,
+                Status = tableToEdit.Status
+            };
+
+            return View(model);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Edit(TableViewModel model)
+        {
+            if (await tableService.TableExistsAsync(model.Id.ToString()) == false)
+            {
+                return BadRequest();
+            }
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            await tableService.EditAsync(model);
+
+            return RedirectToAction("All");
+        }
     }
 }
