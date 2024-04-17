@@ -60,6 +60,7 @@ namespace WaiterApplication.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> All([FromQuery] AllDishesQueryModel model)
         {
             var dishes = await menuService.AllAsync(
@@ -114,7 +115,7 @@ namespace WaiterApplication.Controllers
             {
                 return BadRequest();
             }
-            if (ModelState.IsValid == false)
+            if (!ModelState.IsValid)
             {
                 return View(model);
             }
@@ -145,7 +146,7 @@ namespace WaiterApplication.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> DeleteConfirmed(DishRemoveViewModel model, int id)
+        public async Task<IActionResult> DeleteConfirmed(DishRemoveViewModel model)
         {
             if (await menuService.DishExistsAsync(model.Id.ToString()) == false)
             {
@@ -155,11 +156,6 @@ namespace WaiterApplication.Controllers
             await menuService.DeleteAsync(model.Id);
 
             return RedirectToAction(nameof(All));
-        }
-
-        public IActionResult Index()
-        {
-            return View();
         }
     }
 }
