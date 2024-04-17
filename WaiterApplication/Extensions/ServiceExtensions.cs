@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection.Emit;
 using WaiterApplication.Core.Contracts;
 using WaiterApplication.Core.Services;
 using WaiterApplication.Infrastructure.Data;
@@ -16,6 +17,7 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddScoped<IMenuService, MenuService>();
             services.AddScoped<ITableService, TableService>();
             services.AddScoped<IBillingService, BillingService>();
+            services.AddScoped<IInventoryService, InventoryService>();
 
             return services;
         }
@@ -31,7 +33,8 @@ namespace Microsoft.Extensions.DependencyInjection
 
             return services;
         }
-        public static IServiceCollection AddApplicationIdentity(this IServiceCollection services, IConfiguration config)
+
+            public static IServiceCollection AddApplicationIdentity(this IServiceCollection services, IConfiguration config)
         {
             services.AddDefaultIdentity<ApplicationUser>(options =>
             {

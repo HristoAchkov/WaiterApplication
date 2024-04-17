@@ -1,0 +1,31 @@
+﻿@model InventoryItemViewModel
+
+@{
+    ViewBag.Title = "Create Inventory Item";
+}
+
+<h2>Create Inventory Item</h2>
+<hr />
+
+<form asp-action="CreateItem" asp-controller="Inventory" method="post">
+    <div class="form-group">
+        <label asp-for="Name">Name</label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Quantity">Quantity</label>
+        <input asp-for="Quantity" class="form-control" />
+        <span asp-validation-for="Quantity" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="UnitOfMeasurement">Unit of Measurement</label>
+        <input asp-for="UnitOfMeasurement" class="form-control" />
+        <span asp-validation-for="UnitOfMeasurement" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Create</button>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

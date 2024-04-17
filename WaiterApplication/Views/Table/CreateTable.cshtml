@@ -1,0 +1,34 @@
+﻿@model TableViewModel
+
+@{
+    ViewBag.Title = "Create Table";
+}
+
+<h2>Create New Table</h2>
+<hr />
+
+<form asp-action="CreateTable" method="post">
+    <div class="form-group">
+        <label asp-for="Name">Name:</label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Capacity">Capacity:</label>
+        <input asp-for="Capacity" class="form-control" />
+        <span asp-validation-for="Capacity" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Status">Status:</label>
+        <select asp-for="Status" class="form-control">
+            <option value="true">Occupied</option>
+            <option value="false">Available</option>
+        </select>
+        <span asp-validation-for="Status" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Create Table</button>
+</form>
+
+        @section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

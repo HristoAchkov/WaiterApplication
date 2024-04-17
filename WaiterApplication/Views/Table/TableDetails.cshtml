@@ -1,0 +1,25 @@
+﻿@model TableViewModel
+
+@{
+    ViewBag.Title = "Table Details";
+}
+
+<h2 class="text-center"">@ViewBag.Title</h2>
+<hr />
+
+<div class="text-center"> 
+    <dl class="dl-horizontal">
+        <dt><h4>Name</h4></dt> 
+        <dd>@Model.Name</dd>
+        <dt>Capacity</dt>
+        <dd>@Model.Capacity</dd>
+    </dl>
+</div>
+
+@if (User.IsInRole("Administrator"))
+{
+    <div class="text-center mt-3"> <!-- Added text-center class for centering -->
+        <a href="@Url.Action("Edit", "Table", new { tableId = Model.Id })" class="btn btn-primary">Edit</a>
+        <a href="@Url.Action("RemoveTable", "Table", new { tableId = Model.Id })" class="btn btn-danger">Delete</a>
+    </div>
+}

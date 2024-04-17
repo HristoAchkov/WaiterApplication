@@ -1,0 +1,22 @@
+﻿@model OrderFormModel
+
+@{
+    ViewBag.Title = "Select Dishes";
+}
+
+<h2>Select Dishes</h2>
+<hr />
+
+@foreach (var dish in Model.AvailableDishes)
+{
+    <div class="dish-item">
+        <img src="@dish.Image" alt="@dish.Name" class="dish-image" />
+        <h3>@dish.Name</h3>
+        <p>Price: @dish.Price</p>
+        <form method="post" action="@Url.Action("CreateOrder", "Order")">
+            <input type="hidden" name="tableId" value="@Model.TableId" />
+            <input type="hidden" name="dishId" value="@dish.Id" />
+            <button type="submit" class="btn btn-primary">Add to Order</button>
+        </form>
+    </div>
+}

@@ -1,0 +1,29 @@
+﻿@model TableViewModel
+
+@{
+    ViewBag.Title = "Remove Table";
+}
+
+<h2>@ViewBag.Title</h2>
+<hr />
+
+<div>
+    <h4>Table Details</h4>
+    <dl class="dl-horizontal">
+        <dt>Id</dt>
+        <dd>@Model.Id</dd>
+        <dt>Name</dt>
+        <dd>@Model.Name</dd>
+        <dt>Capacity</dt>
+        <dd>@Model.Capacity</dd>
+    </dl>
+</div>
+
+<form asp-action="RemoveTable" asp-route-id="@Model.Id" method="post">
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        <input type="submit" value="Remove" class="btn btn-danger" /> |
+        <a asp-action="All">Back to List</a>
+    </div>
+</form>

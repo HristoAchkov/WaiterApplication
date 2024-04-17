@@ -1,0 +1,37 @@
+﻿@*@model List<AddDishToOrderViewModel>
+
+@{
+    ViewBag.Title = "Create Order";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="~/css/CreateOrder.css" />
+</head>
+<body>
+
+<h2>Create Order</h2>
+<hr />
+
+@foreach (var dish in Model)
+{
+    <form id="form-@dish.Id" method="post" action="@Url.Action("PlaceOrder", "Order")">
+        <input type="hidden" name="OrderedDishes" value="@dish.Id">
+        <div class="dish-item" onclick="document.getElementById('form-@dish.Id').submit()">
+            <label>
+                @dish.Name - @dish.Price
+                <div class="comment-box">
+                    <input type="text" name="Comments" placeholder="Add optional comment">
+                </div>
+            </label>
+        </div>
+    </form>
+}
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+</body>
+</html>*@

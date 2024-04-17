@@ -1,45 +1,90 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Humanizer.Localisation.DateToOrdinalWords;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.Extensions.Logging;
+using NuGet.Protocol.Core.Types;
+using NuGet.Versioning;
+using System.Collections.Immutable;
 using WaiterApplication.Core.Contracts;
-using WaiterApplication.Core.Models.ViewModel;
-using WaiterApplication.Extensions;
+using WaiterApplication.Core.Enumerations;
+using WaiterApplication.Core.Models.ViewModels;
+using WaiterApplication.Core.Services;
+using WaiterApplication.Infrastructure.Data.Models;
 
 namespace WaiterApplication.Controllers
 {
     public class OrderController : BaseController
     {
         private readonly IOrderService orderService;
-        public OrderController(IOrderService _orderService)
+        private readonly ITableService tableService;
+        private readonly IMenuService menuService;
+        public OrderController(IOrderService _orderService,
+            ITableService _tableService,
+            IMenuService _menuService)
         {
             orderService = _orderService;
+            tableService = _tableService;
+            menuService = _menuService;
+        }
+        [HttpGet]
+        public async Task<IActionResult> All(List<AllOrdersViewModel> model)
+        {
+            model = await orderService.AllOrdersAsync();
+
+            return View(model);
         }
 
         [HttpGet]
-        public async Task<IActionResult> CreateOrder()
+        public async Task<IActionResult> GetOrderTable()
         {
-            if (await orderService.ExistsByIdAsync(User.Id()))
+            var model = await tableService.AllAsync();
+
+            return View(model);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> CreateOrderNew(int tableId)
+        {
+            var availableDishes = await menuService.TableAllAsync();
+            var model = new OrderFormModel
             {
-                return BadRequest();
-            }
-            var model = new CreateOrderModel();
+                TableId = tableId,
+                AvailableDishes = availableDishes.Select(dish => new AddDishToOrderViewModel
+                {
+                    Id = dish.Id,
+                    Name = dish.Name,
+                    Price = dish.Price,
+                    Image = dish.Image
+                }).ToList()
+            };
 
             return View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateOrder(CreateOrderModel model)
+        public async Task<IActionResult> CreateOrder(int dishId, int tableId)
         {
-            if (await orderService.ExistsByIdAsync(User.Id()))
-            {
-                return BadRequest();
-            }
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
 
-            await orderService.CreateAsync(model.OrderedDishes);
+            OrderDish dish = new OrderDish()
+            {
+                DishId = dishId,
+                OrderId = 1,
+                Quantity = 1
+            };
 
-            return RedirectToAction(nameof(HomeController.Index), "Home");
+            var orderId = await orderService.CreateOrderAsync(tableId, dish);
+
+            await orderService.AddDishToOrderAsync(orderId, dish.Id);
+
+            return RedirectToAction("OrderConfirmation", new { orderId });
+
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> OrderConfirmation(int orderId)
+        {
+            var order = await orderService.GetOrderDetailsAsync(orderId);
+            return View(order);
         }
     }
 }

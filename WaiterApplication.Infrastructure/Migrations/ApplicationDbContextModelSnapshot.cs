@@ -17,7 +17,7 @@ namespace WaiterApplication.Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.10")
+                .HasAnnotation("ProductVersion", "6.0.28")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -273,6 +273,7 @@ namespace WaiterApplication.Infrastructure.Migrations
                         .HasComment("Brief dish description");
 
                     b.Property<string>("Image")
+                        .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)")
                         .HasComment("Image URL");
@@ -287,11 +288,16 @@ namespace WaiterApplication.Infrastructure.Migrations
                         .HasColumnType("nvarchar(50)")
                         .HasComment("Dish name");
 
+                    b.Property<int?>("OrderId")
+                        .HasColumnType("int");
+
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)")
                         .HasComment("Dish price");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("OrderId");
 
                     b.ToTable("Dishes");
                 });
@@ -307,7 +313,8 @@ namespace WaiterApplication.Infrastructure.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)")
                         .HasComment("Name of the item");
 
                     b.Property<int>("Quantity")
@@ -335,10 +342,6 @@ namespace WaiterApplication.Infrastructure.Migrations
                     b.Property<int>("TableNumber")
                         .HasColumnType("int")
                         .HasComment("Foreign Key Table Identifier");
-
-                    b.Property<decimal>("TotalAmount")
-                        .HasColumnType("decimal(18,2)")
-                        .HasComment("Total amount of the ordered dishes");
 
                     b.HasKey("Id");
 
@@ -467,6 +470,13 @@ namespace WaiterApplication.Infrastructure.Migrations
                     b.Navigation("Order");
                 });
 
+            modelBuilder.Entity("WaiterApplication.Infrastructure.Data.Models.Dish", b =>
+                {
+                    b.HasOne("WaiterApplication.Infrastructure.Data.Models.Order", null)
+                        .WithMany("OrderedDishes")
+                        .HasForeignKey("OrderId");
+                });
+
             modelBuilder.Entity("WaiterApplication.Infrastructure.Data.Models.Order", b =>
                 {
                     b.HasOne("WaiterApplication.Infrastructure.Data.Models.Table", "Table")
@@ -487,7 +497,7 @@ namespace WaiterApplication.Infrastructure.Migrations
                         .IsRequired();
 
                     b.HasOne("WaiterApplication.Infrastructure.Data.Models.Order", "Order")
-                        .WithMany("OrderedDishes")
+                        .WithMany()
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

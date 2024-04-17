@@ -12,7 +12,10 @@ namespace WaiterApplication.Infrastructure.Data.Models
         [Key]
         public int Id { get; set; }
         [Comment("Total amount of the ordered dishes")]
-        public decimal TotalAmount { get; set; }
+        public decimal TotalAmount 
+        {
+            get => OrderedDishes.Select(x => x.Dish).Sum(d => d.Price);
+        }
         [Required]
         [Range(0,500, ErrorMessage = TableNumbersErrorMessage)]
         [DefaultValue(1)]
