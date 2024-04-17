@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection.Emit;
 using WaiterApplication.Core.Contracts;
 using WaiterApplication.Core.Services;
 using WaiterApplication.Infrastructure.Data;
@@ -22,26 +23,18 @@ namespace Microsoft.Extensions.DependencyInjection
         }
         public static IServiceCollection AddApplicationDbContext(this IServiceCollection services, IConfiguration config)
         {
-            try
-            {
-                var connectionString = config.GetConnectionString("DefaultConnection");
-                services.AddDbContext<WaiterApplicationDbContext>(options =>
-                    options.UseSqlServer(connectionString));
+            var connectionString = config.GetConnectionString("DefaultConnection");
+            services.AddDbContext<WaiterApplicationDbContext>(options =>
+                options.UseSqlServer(connectionString));
 
-                services.AddScoped<IRepository, Repository>();
+            services.AddScoped<IRepository, Repository>();
 
-                services.AddDatabaseDeveloperPageExceptionFilter();
-
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message, ex.Data);
-            }
-            
+            services.AddDatabaseDeveloperPageExceptionFilter();
 
             return services;
         }
-        public static IServiceCollection AddApplicationIdentity(this IServiceCollection services, IConfiguration config)
+
+            public static IServiceCollection AddApplicationIdentity(this IServiceCollection services, IConfiguration config)
         {
             services.AddDefaultIdentity<ApplicationUser>(options =>
             {
