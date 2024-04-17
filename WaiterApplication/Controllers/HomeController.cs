@@ -31,6 +31,10 @@ namespace WaiterApplication.Controllers
             {
                 return View("Error500");
             }
+            if (statusCode == 400)
+            {
+                return View("Error400");
+            }
 
             return View();
         }
