@@ -10,24 +10,28 @@
 @if (Model.Any())
 {
     <table class="table">
-        <thead>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Quantity</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
             <tr>
-                <th>Name</th>
-                <th>Quantity</th>
-                <th>Unit of Measurement</th>
+                <td>@item.Name</td>
+                <td>@item.Quantity @item.UnitOfMeasurement</td>
+                <td>
+                    <div class="btn-group" role="group" aria-label="Item Actions">
+                        <a href="@Url.Action("Edit", "Inventory", new { id = item.Id })" class="btn btn-sm btn-primary me-2">Edit</a>
+                        <a href="@Url.Action("Delete", "Inventory", new { id = item.Id })" class="btn btn-sm btn-danger">Delete</a>
+                    </div>
+                </td>
             </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>@item.Name</td>
-                    <td>@item.Quantity</td>
-                    <td>@item.UnitOfMeasurement</td>
-                </tr>
-            }
-        </tbody>
-    </table>
+        }
+    </tbody>
+</table>
 }
 else
 {

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.Host;
 using WaiterApplication.Core.Contracts;
 using WaiterApplication.Core.Models.ViewModels;
 using WaiterApplication.Extensions;
@@ -37,7 +38,6 @@ namespace WaiterApplication.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateItem(InventoryItemViewModel model)
         {
-
             if (await inventoryService.ItemExistsAsync(User.Id()))
             {
                 return RedirectToAction("All");
@@ -50,6 +50,40 @@ namespace WaiterApplication.Controllers
                 model.Quantity,
                 model.UnitOfMeasurement);
             return RedirectToAction("All");
+        }
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+            if (await inventoryService.ItemExistsAsync(id.ToString()) == false)
+            {
+                return BadRequest();
+            }
+
+            var item = await inventoryService.ItemDetailsByIdAsync(id);
+            var model = new InventoryItemViewModel()
+            {
+                Name = item.Name,
+                Quantity = item.Quantity,
+                UnitOfMeasurement = item.UnitOfMeasurement
+            };
+
+            return View(model);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Edit(InventoryItemViewModel model, int id)
+        {
+            if (await inventoryService.ItemExistsAsync(model.Id.ToString()) == false)
+            {
+                return BadRequest();
+            }
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            await inventoryService.EditAsync(model.Id, model);
+
+            return RedirectToAction(nameof(All));
         }
     }
 }
