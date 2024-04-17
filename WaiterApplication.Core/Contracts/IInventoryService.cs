@@ -12,5 +12,7 @@ namespace WaiterApplication.Core.Contracts
         Task CreateItem(string name, int quantity, string? unitOfMeasurement);
         Task<List<InventoryItemViewModel>> AllInventoryItemsAsync();
         Task<bool> ItemExistsAsync(string itemId);
+        Task<InventoryItemViewModel> ItemDetailsByIdAsync(int id);
+        Task EditAsync(int itemId, InventoryItemViewModel model);
     }
 }
