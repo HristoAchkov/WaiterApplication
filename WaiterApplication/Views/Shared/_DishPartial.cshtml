@@ -3,25 +3,26 @@
 
 <hr />
 
-<div class="row">
-        <div class="col-md-4">
-            <div class="card mb-3">
-                 @if (!string.IsNullOrEmpty(@Model.Image))
+<div class="row justify-content-center">
+    <div class="col-md-4 mx-auto"> 
+        <div class="card mb-3">
+             @if (!string.IsNullOrEmpty(@Model.Image))
+            {
+                <img class="card-img-top" src="@Model.Image" alt="Dish Image">
+            }
+            <div class="card-body text-center">
+                <h4>@Model.Name</h4>
+                <p>@Model.Description</p>
+                <h6>Price: <b>@String.Format("{0:f2}", @Model.Price)</b></h6>
+                @if (!string.IsNullOrEmpty(@Model.Ingredients))
                 {
-                    <img class="card-img-top" src="@Model.Image" alt="Dish Image">
+                    <h6>Ingredients:</h6>
+                    <p>@Model.Ingredients</p>
                 }
-                <div class="card-body text-center">
-                    <h4>@Model.Name</h4>
-                    <p>@Model.Description</p>
-                    <h6>Price: <b>@String.Format("{0:f2}", @Model.Price)</b></h6>
-                    @if (!string.IsNullOrEmpty(@Model.Ingredients))
-                    {
-                        <h6>Ingredients:</h6>
-                        <p>@Model.Ingredients</p>
-                    }
-                    <br />
-                    <a asp-controller="Menu" asp-action="Details" asp-route-id="@Model.Id"
-                       class="btn btn-success">Details</a>
-                </div>
+                <br />
+                <a asp-controller="Menu" asp-action="Details" asp-route-id="@Model.Id"
+                   class="btn btn-success">Details</a>
             </div>
         </div>
+    </div>
+</div>

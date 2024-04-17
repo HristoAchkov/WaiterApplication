@@ -1,5 +1,6 @@
 ﻿@using WaiterApplication.Core.Models.ViewModels
 @model DishDetailsServiceModel
+<link rel="stylesheet" href="~/css/OrderDetails.css" />
 
 @{
     ViewData["Title"] = "Dish Details";
@@ -7,10 +8,10 @@
 
 <h1 class="text-center">@ViewBag.Title</h1>
 
-<div class="card">
+<div class="card text-center">
     @if (!string.IsNullOrEmpty(Model.Image))
     {
-        <img src="@Model.Image" class="card-img-top" alt="Dish Image">
+        <img src="@Model.Image" class="card-img-top custom-img mx-auto" alt="Dish Image"> 
     }
     <div class="card-body">
         <h5 class="card-title">@Model.Name</h5>
