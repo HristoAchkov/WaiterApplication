@@ -21,5 +21,6 @@
     <div>
         <a href="@Url.Action("Edit", "Table", new { id = Model.Id })" class="btn btn-primary">Edit</a>
         <a href="@Url.Action("RemoveTable", "Table", new { tableId = Model.Id })" class="btn btn-danger">Delete</a>
+        <a href="@Url.Action("CreateOrder", "Order", new { tableId = Model.Id })" class="btn btn-danger">Create Order</a>
     </div>
 }

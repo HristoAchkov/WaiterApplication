@@ -5,6 +5,7 @@ using WaiterApplication.Infrastructure.Data.Models;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 using WaiterApplication.Core.Models.ViewModels;
+using Microsoft.EntityFrameworkCore.Query;
 
 namespace WaiterApplication.Core.Services
 {
@@ -30,13 +31,9 @@ namespace WaiterApplication.Core.Services
             return await allOrders;
         }
 
-        public async Task CreateAsync(ICollection<Dish> ordered)
+        public async Task CreateAsync(List<AddDishToOrderViewModel> ordered)
         {
-            await repository.AddAsync(new Order()
-            {
-                OrderedDishes = ordered
-            });
-
+            await repository.AddAsync<List<AddDishToOrderViewModel>>(ordered);
             await repository.SaveChangesAsync();
         }
 

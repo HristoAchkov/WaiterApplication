@@ -11,7 +11,7 @@ namespace WaiterApplication.Core.Contracts
     public interface IOrderService
     {
         Task<bool> ExistsByIdAsync(string id);
-        Task CreateAsync(ICollection<Dish> ordered);
+        Task CreateAsync(List<AddDishToOrderViewModel> ordered);
         Task<List<AllOrdersViewModel>> AllOrdersAsync();
     }
 }

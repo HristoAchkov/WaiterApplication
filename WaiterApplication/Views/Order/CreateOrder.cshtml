@@ -12,21 +12,25 @@
 <<h2>Create Order</h2>
 <hr />
 
-<form method="post" action="@Url.Action("CreateOrder", "Order")">
+<form method="post" action="@Url.Action("PlaceOrder", "Order")">
     <h4>Select Dishes:</h4>
     <div class="dish-grid">
         @foreach (var dish in Model)
         {
             <div class="dish-item">
                 <label>
-                    <input type="checkbox" name="OrderedDishes" value="@dish.Name">
+                    <input type="checkbox" name="OrderedDishes" value="@dish.Id">
                     <div>@dish.Name - @dish.Price</div>
                 </label>
                 <div class="comment-box">
-                    <input type="text" name="Comments[@dish.Comment]" placeholder="Add optional comment">
+                    <input type="text" name="Comments[@dish.Id]" placeholder="Add optional comment">
                 </div>
             </div>
         }
     </div>
     <button type="submit" class="btn btn-primary">Create Order</button>
 </form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -16,18 +16,28 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddScoped<IMenuService, MenuService>();
             services.AddScoped<ITableService, TableService>();
             services.AddScoped<IBillingService, BillingService>();
+            services.AddScoped<IInventoryService, InventoryService>();
 
             return services;
         }
         public static IServiceCollection AddApplicationDbContext(this IServiceCollection services, IConfiguration config)
         {
-            var connectionString = config.GetConnectionString("DefaultConnection");
-            services.AddDbContext<WaiterApplicationDbContext>(options =>
-                options.UseSqlServer(connectionString));
+            try
+            {
+                var connectionString = config.GetConnectionString("DefaultConnection");
+                services.AddDbContext<WaiterApplicationDbContext>(options =>
+                    options.UseSqlServer(connectionString));
 
-            services.AddScoped<IRepository, Repository>();
+                services.AddScoped<IRepository, Repository>();
 
-            services.AddDatabaseDeveloperPageExceptionFilter();
+                services.AddDatabaseDeveloperPageExceptionFilter();
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message, ex.Data);
+            }
+            
 
             return services;
         }

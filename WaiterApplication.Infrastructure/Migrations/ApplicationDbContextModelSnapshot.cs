@@ -254,7 +254,7 @@ namespace WaiterApplication.Infrastructure.Migrations
 
                     b.HasIndex("OrderId");
 
-                    b.ToTable("Bills");
+                    b.ToTable("Bills", (string)null);
                 });
 
             modelBuilder.Entity("WaiterApplication.Infrastructure.Data.Models.Dish", b =>
@@ -299,7 +299,7 @@ namespace WaiterApplication.Infrastructure.Migrations
 
                     b.HasIndex("OrderId");
 
-                    b.ToTable("Dishes");
+                    b.ToTable("Dishes", (string)null);
                 });
 
             modelBuilder.Entity("WaiterApplication.Infrastructure.Data.Models.InventoryItem", b =>
@@ -327,7 +327,7 @@ namespace WaiterApplication.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("InventoryItems");
+                    b.ToTable("InventoryItems", (string)null);
                 });
 
             modelBuilder.Entity("WaiterApplication.Infrastructure.Data.Models.Order", b =>
@@ -347,7 +347,7 @@ namespace WaiterApplication.Infrastructure.Migrations
 
                     b.HasIndex("TableNumber");
 
-                    b.ToTable("Orders");
+                    b.ToTable("Orders", (string)null);
                 });
 
             modelBuilder.Entity("WaiterApplication.Infrastructure.Data.Models.OrderDish", b =>
@@ -377,7 +377,7 @@ namespace WaiterApplication.Infrastructure.Migrations
 
                     b.HasIndex("OrderId");
 
-                    b.ToTable("OrderDishes");
+                    b.ToTable("OrderDishes", (string)null);
                 });
 
             modelBuilder.Entity("WaiterApplication.Infrastructure.Data.Models.Table", b =>
@@ -405,7 +405,7 @@ namespace WaiterApplication.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Tables");
+                    b.ToTable("Tables", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

@@ -6,13 +6,13 @@ using System.Text;
 using System.Threading.Tasks;
 using WaiterApplication.Infrastructure.Data.Models;
 
-namespace WaiterApplication.Core.Models.ViewModel
+namespace WaiterApplication.Core.Models.ViewModels
 {
     public class OrderFormModel
     {
         [Display(Name = "Dish")]
-        public ICollection<Dish> OrderedDishes { get; set; } = new List<Dish>();
+        public ICollection<AddDishToOrderViewModel> OrderedDishes { get; set; } = new List<AddDishToOrderViewModel>();
         [Display(Name = "Optional Comment")]
-        public string? Comment { get; set; }
+        public ICollection<string>? Comments { get; set; } = new List<string>();
     }
 }

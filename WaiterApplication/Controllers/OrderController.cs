@@ -1,11 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Runtime.InteropServices;
+using Microsoft.Extensions.Logging;
+using NuGet.Protocol.Core.Types;
+using NuGet.Versioning;
 using WaiterApplication.Core.Contracts;
-using WaiterApplication.Core.Enumerations;
-using WaiterApplication.Core.Models.ViewModel;
 using WaiterApplication.Core.Models.ViewModels;
-using WaiterApplication.Core.Services;
-using WaiterApplication.Extensions;
 
 namespace WaiterApplication.Controllers
 {
@@ -14,6 +12,7 @@ namespace WaiterApplication.Controllers
         private readonly IOrderService orderService;
         private readonly ITableService tableService;
         private readonly IMenuService menuService;
+
         public OrderController(IOrderService _orderService,
             ITableService _tableService,
             IMenuService _menuService)
@@ -22,22 +21,25 @@ namespace WaiterApplication.Controllers
             tableService = _tableService;
             menuService = _menuService;
         }
+        [HttpGet]
         public async Task<IActionResult> All(List<AllOrdersViewModel> model)
         {
             model = await orderService.AllOrdersAsync();
 
             return View(model);
         }
+        [HttpGet]
+        public async Task<IActionResult> GetOrderTable()
+        {
+            var model = await tableService.AllAsync();
 
-        [HttpPost]
+            return View(model);
+        }
+
+        [HttpGet]
         public async Task<IActionResult> CreateOrder(int tableId)
         {
             var table = await tableService.TableDetailsByIdAsync(tableId);
-
-            if (await orderService.ExistsByIdAsync(User.Id()))
-            {
-                return BadRequest();
-            }
 
             if (await tableService.TableExistsAsync(table.Id.ToString()) == false)
             {
@@ -49,28 +51,46 @@ namespace WaiterApplication.Controllers
                 return BadRequest();
             }
 
-            var model = new OrderFormModel();
             table.Status = true;
+            var allDishesAvailable = await menuService.TableAllAsync();
 
+            List<AddDishToOrderViewModel> model = allDishesAvailable
+                .Select(x => new AddDishToOrderViewModel
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    Image = x.Image,
+                    Price = x.Price,
+                }).ToList();
 
             return View(model);
         }
-
         [HttpPost]
-        public async Task<IActionResult> AddDishesToOrder(OrderFormModel model, int dishId)
+        public async Task<IActionResult> PlaceOrder(List<AddDishToOrderViewModel> model,[FromQuery] int tableId)
         {
+            if (await tableService.TableExistsAsync(tableId.ToString()) == false)
+            {
+                return BadRequest();
+            }
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
-            if (await menuService.DishExistsAsync(dishId.ToString()) == false)
+
+            var order = new OrderFormModel();
+            foreach (var item in model)
             {
-                return BadRequest();
+                // Perform any necessary operations on each item
             }
 
-
-
-            return null;
+            // Redirect to a success page or return a view
+            return RedirectToAction(nameof(All)); // Replace "ActionName" with the appropriate action
         }
+        //[HttpPost]
+        //public async Task<IActionResult> OrderConfirmation(List<AddDishToOrderViewModel> model)
+        //{
+        //    await orderService.CreateAsync(model);
+        //    return RedirectToAction(nameof(All));
+        //}
     }
 }

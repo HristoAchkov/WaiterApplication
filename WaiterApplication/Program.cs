@@ -1,5 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using WaiterApplication.ModelBinders;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using WaiterApplication.Infrastructure.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 

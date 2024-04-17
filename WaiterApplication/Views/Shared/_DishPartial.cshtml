@@ -14,7 +14,6 @@
                     <h4>@Model.Name</h4>
                     <p>@Model.Description</p>
                     <h6>Price: <b>@String.Format("{0:f2}", @Model.Price)</b></h6>
-                    @* Add your logic for Ingredients display here *@
                     @if (!string.IsNullOrEmpty(@Model.Ingredients))
                     {
                         <h6>Ingredients:</h6>
@@ -23,7 +22,6 @@
                     <br />
                     <a asp-controller="Menu" asp-action="Details" asp-route-id="@Model.Id"
                        class="btn btn-success">Details</a>
-                    @* Add your logic for Edit, Delete, Rent, Leave buttons here *@
                 </div>
             </div>
         </div>
