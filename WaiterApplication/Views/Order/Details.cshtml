@@ -1,0 +1,39 @@
+﻿@model OrderViewModel
+
+<div>
+    <dl class="dl-horizontal">
+        <dt>Total Amount</dt>
+        <dd>@Model.TotalAmount.ToString("C")</dd>
+        <dt>Table Number</dt>
+        <dd>@Model.TableId</dd>
+    </dl>
+</div>
+
+@if (Model.OrderDishes.Count == 0)
+{
+    <p>No dishes ordered yet.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var orderDish in Model.OrderDishes)
+            {
+                <tr>
+                    <td>@orderDish.Dish.Name</td>
+                    <td>@orderDish.Dish.Price.ToString("C")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<div>
+    <a href="@Url.Action("AddAnotherDish", "Order", new { orderId = Model.OrderId })" class="btn btn-primary">Add Dish</a>
+</div>

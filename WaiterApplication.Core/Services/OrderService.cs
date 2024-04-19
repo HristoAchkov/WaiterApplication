@@ -6,6 +6,8 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 using WaiterApplication.Core.Models.ViewModels;
 using Microsoft.EntityFrameworkCore.Query;
+using WaiterApplication.Core.Models.QueryModels;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace WaiterApplication.Core.Services
 {
@@ -18,11 +20,36 @@ namespace WaiterApplication.Core.Services
             repository = _repository;
         }
 
+        public async Task AddOrderDishToOrder(OrderDish orderedDish, int orderId)
+        {
+            Order order = await repository.GetByIdAsync<Order>(orderId);
+
+            order.OrderedDishes.Add(orderedDish);
+
+            await repository.SaveChangesAsync();
+        }
+
+        public async Task<List<AllDishesOrder>> AllDishes(int orderId)
+        {
+            var dishesToShow = await repository.AllAsNoTracking<Dish>()
+                .Select(x => new AllDishesOrder
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    Price = x.Price,
+                    Image = x.Image,
+                    OrderId = orderId
+                }).ToListAsync();
+
+            return dishesToShow;
+        }
+
         public async Task<List<AllOrdersViewModel>> AllOrdersAsync()
         {
             var allOrders = repository.AllAsNoTracking<Order>()
                 .Select(o => new AllOrdersViewModel()
                 {
+                    OrderId = o.Id,
                     TableNumber = o.Table.TableName,
                     TotalAmount = o.TotalAmount
                 })
@@ -31,60 +58,23 @@ namespace WaiterApplication.Core.Services
             return await allOrders;
         }
 
-        public async Task<int> CreateOrderAsync(int tableId, OrderDish dish)
+        public async Task CreateOrderAsync(Order order)
         {
-            // Create a new order instance
-            Order order = new Order
-            {
-                TableNumber = tableId,
-            };
-
-            // Perform any additional operations (e.g., calculate total amount) if necessary
-
-            // Add the order to the database
-            repository.AddAsync<Order>(order);
+            await repository.AddAsync<Order>(order);
             await repository.SaveChangesAsync();
-
-            // Return the ID of the newly created order
-            return order.Id;
         }
-        public async Task<bool> AddDishToOrderAsync(int orderId, int dishId)
-        {
-            // Retrieve the order from the database
-            var order = await repository.GetByIdAsync<Order>(orderId);
-            if (order == null)
-            {
-                // Order not found
-                return false;
-            }
 
-            // Retrieve the dish from the database
-            var dish = await repository.GetByIdAsync<Dish>(dishId);
-            if (dish == null)
+        public async Task CreateOrderDish(int orderId, int dishId, string? comment)
+        {
+            var orderDish = new OrderDish()
             {
-                // Dish not found
-                return false;
-            }
-            OrderDish orderDish = new OrderDish()
-            {
-                Id = dish.Id,
+                DishId = dishId,
                 OrderId = orderId,
+                Comment = comment,
             };
-            // Add the dish to the order's list of ordered dishes
-            order.OrderedDishes.Add(orderDish);
 
-            // Save changes to the database
+            await repository.AddAsync<OrderDish>(orderDish);
             await repository.SaveChangesAsync();
-
-            return true;
-        }
-        public async Task<Order> GetOrderDetailsAsync(int orderId)
-        {
-            // Retrieve the order from the database
-            var order = await repository
-                .GetByIdAsync<Order>(orderId);
-
-            return order;
         }
 
         public async Task<bool> ExistsByIdAsync(string id)
@@ -93,29 +83,36 @@ namespace WaiterApplication.Core.Services
                 .AnyAsync(o => o.Id.ToString() == id);
         }
 
+        public async Task<OrderViewModel> GetOrderDetailsByIdAsync(int id)
+        {
+            var order = await repository.GetByIdAsync<Order>(id);
+
+            var orderDish = await repository.AllAsNoTracking<OrderDish>()
+                .Where((od => od.OrderId == id)).ToListAsync();
+
+
+            var orderViewModel = new OrderViewModel()
+            {
+                OrderId = order.Id,
+                TableId = order.TableNumber,
+                OrderDishes = orderDish
+            };
+
+            return orderViewModel;
+        
+        }
+        public async Task<Dish> GetDishDetailsByIdAsync(int id)
+        {
+            var dish = await repository.GetByIdAsync<Dish>(id);
+
+            return dish;
+        }
+
         public async Task<bool> ItemExistsByIdAsync()
         {
             return true;
         }
 
-        public async Task<Dish> CreateAsync(string name, string image, decimal price)
-        {
-            Dish dish = new Dish()
-            {
-                Name = name,
-                Image = image,
-                Price = price
-            };
-            await repository.AddAsync<Dish>(dish);
-            await repository.SaveChangesAsync();
-            return dish;
-        }
-
-        public async Task AddDishAsync(Dish dish, int tableId)
-        {
-            var order = new Order();
-            //order.OrderedDishes.Add(dish);
-            order.TableNumber = tableId;
-        }
+        
     }
 }

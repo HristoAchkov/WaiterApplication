@@ -9,27 +9,32 @@
 
 @if (Model.Any())
 {
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Table</th>
-                <th>Amount</th>
-                <th>Details</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var order in Model)
-            {
-                <tr>
-                    <td>@order.TableNumber</td>
-                    <td>@order.TotalAmount</td>
-                    @*<td>
-                        <a href="@Url.Action("OrderDetails", "Order", new { orderId = order.Id })">Details</a>
-                    </td>*@
-                </tr>
-            }
-        </tbody>
-    </table>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Order Summary</h5>
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th scope="col">Table</th>
+                            <th scope="col">Details</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var order in Model)
+                        {
+                            <tr>
+                                <td style="font-size: 20px;">@order.TableNumber</td>
+                                <td>
+                                    <a href="@Url.Action("Details", "Order", new { orderId = order.OrderId })" class="btn btn-primary btn-lg">Details</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 }
 else
 {

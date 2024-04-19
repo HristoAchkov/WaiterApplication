@@ -5,8 +5,10 @@ using Microsoft.Extensions.Logging;
 using NuGet.Protocol.Core.Types;
 using NuGet.Versioning;
 using System.Collections.Immutable;
+using System.Collections.Specialized;
 using WaiterApplication.Core.Contracts;
 using WaiterApplication.Core.Enumerations;
+using WaiterApplication.Core.Models.QueryModels;
 using WaiterApplication.Core.Models.ViewModels;
 using WaiterApplication.Core.Services;
 using WaiterApplication.Infrastructure.Data.Models;
@@ -33,58 +35,105 @@ namespace WaiterApplication.Controllers
 
             return View(model);
         }
-
         [HttpGet]
-        public async Task<IActionResult> GetOrderTable()
+        public async Task<IActionResult> GetTables()
         {
             var model = await tableService.AllAsync();
 
             return View(model);
         }
-
         [HttpGet]
-        public async Task<IActionResult> CreateOrderNew(int tableId)
+        public async Task<IActionResult> CreateOrder([FromQuery]int tableId)
         {
-            var availableDishes = await menuService.TableAllAsync();
-            var model = new OrderFormModel
+            if (await tableService.TableExistsAsync(tableId.ToString()) == false)
+            {
+                return BadRequest();
+            }
+
+            OrderViewModel order = new OrderViewModel()
             {
                 TableId = tableId,
-                AvailableDishes = availableDishes.Select(dish => new AddDishToOrderViewModel
-                {
-                    Id = dish.Id,
-                    Name = dish.Name,
-                    Price = dish.Price,
-                    Image = dish.Image
-                }).ToList()
+                OrderDishes = new List<OrderDish>()
             };
 
-            return View(model);
+            //await orderService.CreateOrderAsync(order.TableId, order.OrderDishes);
+            var model = new Order()
+            {
+                TableNumber = tableId,
+                OrderedDishes = order.OrderDishes
+            };
+            await orderService.CreateOrderAsync(model);
+            order.OrderId = model.Id;
+
+            return View(order);
         }
-
-        [HttpPost]
-        public async Task<IActionResult> CreateOrder(int dishId, int tableId)
+        [HttpGet]
+        public async Task<IActionResult> AllDishesMenu(int orderId)
         {
+            var dishes = await orderService.AllDishes(orderId);
 
-            OrderDish dish = new OrderDish()
+            return View(dishes);
+        }
+        [HttpPost]
+        public async Task<IActionResult> AddDish(int dishId,int orderId, string? comment)
+        {
+            var orderDish = new OrderDish()
             {
                 DishId = dishId,
-                OrderId = 1,
-                Quantity = 1
+                Dish = await orderService.GetDishDetailsByIdAsync(dishId),
+                OrderId = orderId,
+                Quantity = 1,
+                Comment = comment
             };
 
-            var orderId = await orderService.CreateOrderAsync(tableId, dish);
+            await orderService.AddOrderDishToOrder(orderDish, orderId);
 
-            await orderService.AddDishToOrderAsync(orderId, dish.Id);
-
-            return RedirectToAction("OrderConfirmation", new { orderId });
-
+            return RedirectToAction(nameof(All));
         }
-
         [HttpGet]
-        public async Task<IActionResult> OrderConfirmation(int orderId)
+        public async Task<IActionResult> Details(int orderId)
         {
-            var order = await orderService.GetOrderDetailsAsync(orderId);
-            return View(order);
+            var model = await orderService.GetOrderDetailsByIdAsync(orderId);
+
+            var dishes = new List<Dish>();
+
+            foreach (var dishId in model.OrderDishes.Select(x => x.DishId))
+            {
+                var dishDetails = await orderService.GetDishDetailsByIdAsync(dishId);
+                dishes.Add(dishDetails);
+            }
+
+            
+
+            foreach (var item in model.OrderDishes)
+            {
+                var dish = dishes.FirstOrDefault(d => d.Id == item.DishId);
+                item.Dish = dish;
+            }
+            return View(model);
+        }
+        [HttpGet]
+        public async Task<IActionResult> AddAnotherDish(int orderId)
+        {
+            var dishes = await orderService.AllDishes(orderId);
+
+            return View(dishes);
+        }
+        [HttpPost]
+        public async Task<IActionResult> AddAnotherDish(int dishId, int orderId, string? comment)
+        {
+            var orderDish = new OrderDish()
+            {
+                DishId = dishId,
+                Dish = await orderService.GetDishDetailsByIdAsync(dishId),
+                OrderId = orderId,
+                Quantity = 1,
+                Comment = comment
+            };
+
+            await orderService.AddOrderDishToOrder(orderDish, orderId);
+
+            return RedirectToAction(nameof(All));
         }
     }
 }

@@ -13,5 +13,6 @@ namespace WaiterApplication.Core.Models.ViewModels
         public string TableNumber { get; set; } = string.Empty;
         [Display(Name = "Amount")]
         public decimal TotalAmount { get; set; }
+        public int OrderId { get; set; }
     }
 }

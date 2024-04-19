@@ -13,10 +13,11 @@ namespace WaiterApplication.Core.Contracts
     {
         Task<bool> ExistsByIdAsync(string id);
         Task<List<AllOrdersViewModel>> AllOrdersAsync();
-        Task<int> CreateOrderAsync(int tableId, OrderDish dish);
-        Task<Dish> CreateAsync(string name, string image, decimal price);
-        Task<bool> AddDishToOrderAsync(int orderId, int dishId);
-        Task<Order> GetOrderDetailsAsync(int orderId);
-        Task AddDishAsync(Dish dish, int tableId);
+        Task CreateOrderDish(int orderId, int dishId,string? comment);
+        Task CreateOrderAsync(Order order);
+        Task AddOrderDishToOrder(OrderDish orderedDish, int orderId);
+        Task<Dish> GetDishDetailsByIdAsync(int id);
+        Task<OrderViewModel> GetOrderDetailsByIdAsync(int id);
+        Task<List<AllDishesOrder>> AllDishes(int orderId);
     }
 }

@@ -22,7 +22,7 @@
 
 @foreach (var table in Model)
 {
-    <a href="@Url.Action("CreateOrderNew", "Order", new { tableId = table.Id })" class="card @(table.Status ? "occupied" : "available")" style="cursor: pointer; text-decoration: none;">
+    <a href="@Url.Action("CreateOrder", "Order", new { tableId = table.Id })" class="card @(table.Status ? "occupied" : "available")" style="cursor: pointer; text-decoration: none;">
         <div class="card-body">
             <h5 class="card-title">@table.Name</h5>
             <p class="card-text">Capacity: @table.Capacity</p>
