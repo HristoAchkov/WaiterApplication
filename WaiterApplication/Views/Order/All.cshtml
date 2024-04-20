@@ -7,6 +7,7 @@
 <h2>All Orders</h2>
 <hr />
 
+
 @if (Model.Any())
 {
     <div class="card">
@@ -18,6 +19,7 @@
                         <tr>
                             <th scope="col">Table</th>
                             <th scope="col">Details</th>
+                            <th scope="col">Remove</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -27,6 +29,11 @@
                                 <td style="font-size: 20px;">@order.TableNumber</td>
                                 <td>
                                     <a href="@Url.Action("Details", "Order", new { orderId = order.OrderId })" class="btn btn-primary btn-lg">Details</a>
+                                </td>
+                                <td>
+                                    <form asp-action="RemoveOrder" asp-route-orderId="@order.OrderId" method="post">
+                                        <button type="submit" class="btn btn-danger btn-lg">Remove</button>
+                                    </form>
                                 </td>
                             </tr>
                         }

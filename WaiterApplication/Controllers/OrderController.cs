@@ -50,13 +50,26 @@ namespace WaiterApplication.Controllers
                 return BadRequest();
             }
 
+            var table = await tableService.TableDetailsByIdAsync(tableId);
+
+            if (table.Status == true)
+            {
+                return RedirectToAction(nameof(All));
+            }
+            else
+            {
+                table.Status = true;
+            }
+
+            var tableModel = await orderService.GetTableAsync(tableId);
+            tableModel.Status = table.Status;
+
             OrderViewModel order = new OrderViewModel()
             {
                 TableId = tableId,
                 OrderDishes = new List<OrderDish>()
             };
 
-            //await orderService.CreateOrderAsync(order.TableId, order.OrderDishes);
             var model = new Order()
             {
                 TableNumber = tableId,
@@ -103,8 +116,6 @@ namespace WaiterApplication.Controllers
                 dishes.Add(dishDetails);
             }
 
-            
-
             foreach (var item in model.OrderDishes)
             {
                 var dish = dishes.FirstOrDefault(d => d.Id == item.DishId);
@@ -133,6 +144,15 @@ namespace WaiterApplication.Controllers
 
             await orderService.AddOrderDishToOrder(orderDish, orderId);
 
+            return RedirectToAction(nameof(All));
+        }
+        [HttpPost]
+        public async Task<IActionResult> RemoveOrder(int orderId)
+        {
+            var order = await orderService.GetOrderDetailsByIdAsync(orderId);
+            List<int> dishIds = order.OrderDishes.Select(x => x.Id).ToList();
+
+            await orderService.RemoveOrderDishFromOrder(orderId, dishIds);
             return RedirectToAction(nameof(All));
         }
     }

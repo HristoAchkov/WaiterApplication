@@ -14,6 +14,6 @@ namespace WaiterApplication.Core.Models.ViewModels
         [Range(MinTableCapacity,MaxTableCapacity)]
         public int Capacity { get; set; }
         [Required]
-        public bool Status { get; set; } = false;
+        public bool Status { get; set; }
     }
 }

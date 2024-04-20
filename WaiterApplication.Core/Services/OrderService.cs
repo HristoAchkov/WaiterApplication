@@ -113,6 +113,21 @@ namespace WaiterApplication.Core.Services
             return true;
         }
 
-        
+        public async Task<Table> GetTableAsync(int tableId)
+        {
+            var table = await repository.GetByIdAsync<Table>(tableId);
+
+            return table;
+        }
+
+        public async Task RemoveOrderDishFromOrder(int orderId, List<int> dishIds)
+        {
+            foreach (var id in dishIds)
+            {
+                await repository.RemoveAsync<OrderDish>(id);
+            }
+            await repository.RemoveAsync<Order>(orderId);
+            await repository.SaveChangesAsync();
+        }
     }
 }
