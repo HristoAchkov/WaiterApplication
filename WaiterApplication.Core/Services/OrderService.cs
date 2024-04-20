@@ -90,7 +90,6 @@ namespace WaiterApplication.Core.Services
             var orderDish = await repository.AllAsNoTracking<OrderDish>()
                 .Where((od => od.OrderId == id)).ToListAsync();
 
-
             var orderViewModel = new OrderViewModel()
             {
                 OrderId = order.Id,
@@ -120,13 +119,19 @@ namespace WaiterApplication.Core.Services
             return table;
         }
 
-        public async Task RemoveOrderDishFromOrder(int orderId, List<int> dishIds)
+        public async Task RemoveOrderDishAndOrder(int orderId, List<int> dishIds)
         {
             foreach (var id in dishIds)
             {
                 await repository.RemoveAsync<OrderDish>(id);
             }
             await repository.RemoveAsync<Order>(orderId);
+            await repository.SaveChangesAsync();
+        }
+
+        public async Task RemoveOrderDishFromOrder(int dishId)
+        {
+            await repository.RemoveAsync<OrderDish>(dishId);
             await repository.SaveChangesAsync();
         }
     }

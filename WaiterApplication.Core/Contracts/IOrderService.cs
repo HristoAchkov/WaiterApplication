@@ -20,6 +20,7 @@ namespace WaiterApplication.Core.Contracts
         Task<Dish> GetDishDetailsByIdAsync(int id);
         Task<OrderViewModel> GetOrderDetailsByIdAsync(int id);
         Task<List<AllDishesOrder>> AllDishes(int orderId);
-        Task RemoveOrderDishFromOrder(int orderId, List<int> dishIds);
+        Task RemoveOrderDishAndOrder(int orderId, List<int> dishIds);
+        Task RemoveOrderDishFromOrder(int dishId);
     }
 }

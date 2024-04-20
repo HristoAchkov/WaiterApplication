@@ -1,14 +1,5 @@
 ﻿@model OrderViewModel
 
-<div>
-    <dl class="dl-horizontal">
-        <dt>Total Amount</dt>
-        <dd>@Model.TotalAmount.ToString("C")</dd>
-        <dt>Table Number</dt>
-        <dd>@Model.TableId</dd>
-    </dl>
-</div>
-
 @if (Model.OrderDishes.Count == 0)
 {
     <p>No dishes ordered yet.</p>
@@ -20,6 +11,8 @@ else
             <tr>
                 <th>Name</th>
                 <th>Price</th>
+                <th>Comment</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -28,6 +21,14 @@ else
                 <tr>
                     <td>@orderDish.Dish.Name</td>
                     <td>@orderDish.Dish.Price.ToString("C")</td>
+                    <td>@orderDish.Comment</td>
+                    <td>
+                        <form asp-action="RemoveDishFromOrder" method="post">
+                            <input type="hidden" name="orderId" value="@Model.OrderId" />
+                            <input type="hidden" name="dishId" value="@orderDish.Id" />
+                            <button type="submit" class="btn btn-danger btn-sm">-</button>
+                        </form>
+                    </td>
                 </tr>
             }
         </tbody>
@@ -36,4 +37,11 @@ else
 
 <div>
     <a href="@Url.Action("AddAnotherDish", "Order", new { orderId = Model.OrderId })" class="btn btn-primary">Add Dish</a>
+</div>
+
+<div>
+    <dl class="dl-horizontal">
+        <dt>Total Amount</dt>
+        <dd>@Model.TotalAmount.ToString("C")</dd>
+    </dl>
 </div>

@@ -152,8 +152,16 @@ namespace WaiterApplication.Controllers
             var order = await orderService.GetOrderDetailsByIdAsync(orderId);
             List<int> dishIds = order.OrderDishes.Select(x => x.Id).ToList();
 
-            await orderService.RemoveOrderDishFromOrder(orderId, dishIds);
+            await orderService.RemoveOrderDishAndOrder(orderId, dishIds);
             return RedirectToAction(nameof(All));
+        }
+        [HttpPost]
+        public async Task<IActionResult> RemoveDishFromOrder(int orderId, int dishId)
+        {
+            var order = await orderService.GetOrderDetailsByIdAsync(orderId);
+            await orderService.RemoveOrderDishFromOrder(dishId);
+
+            return RedirectToAction(nameof(Details), new {orderId = orderId});
         }
     }
 }
