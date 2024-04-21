@@ -1,0 +1,23 @@
+﻿@model BillViewModel
+
+@{
+    ViewBag.Title = "Bill Details";
+}
+
+<h2>Bill Details</h2>
+
+<div>
+    <dl class="dl-horizontal">
+        <dt>Total Amount</dt>
+        <dd>@Model.TotalAmount.ToString("C")</dd>
+        <dt>Order ID</dt>
+        <dd>@Model.OrderId</dd>
+    </dl>
+</div>
+
+<div>
+    <form asp-action="CalculateBillConfirm" method="post">
+        <input type="hidden" name="billId" value="@Model.Id" />
+        <button type="submit" class="btn btn-primary">Confirm</button>
+    </form>
+</div>
