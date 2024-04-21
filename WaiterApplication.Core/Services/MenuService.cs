@@ -121,6 +121,7 @@ namespace WaiterApplication.Core.Services
             if (dish != null)
             {
                 dish.Name = model.Name;
+                dish.Description = model.Description;
                 dish.Image = model.Image;
                 dish.Price = model.Price;
                 dish.Ingredients = model.Ingredients;
