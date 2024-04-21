@@ -47,6 +47,7 @@ namespace WaiterApplication.Core.Services
         public async Task<List<AllOrdersViewModel>> AllOrdersAsync()
         {
             var allOrders = repository.AllAsNoTracking<Order>()
+                //.Where(x => x.Status == false)
                 .Select(o => new AllOrdersViewModel()
                 {
                     OrderId = o.Id,
