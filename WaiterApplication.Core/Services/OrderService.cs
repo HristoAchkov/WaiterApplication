@@ -47,12 +47,13 @@ namespace WaiterApplication.Core.Services
         public async Task<List<AllOrdersViewModel>> AllOrdersAsync()
         {
             var allOrders = repository.AllAsNoTracking<Order>()
-                //.Where(x => x.Status == false)
+                .Where(x => x.IsPaid == false)
                 .Select(o => new AllOrdersViewModel()
                 {
                     OrderId = o.Id,
                     TableNumber = o.Table.TableName,
-                    TotalAmount = o.TotalAmount
+                    TotalAmount = o.TotalAmount,
+                    TableId = o.Table.Id
                 })
                 .ToListAsync();
 
@@ -108,11 +109,6 @@ namespace WaiterApplication.Core.Services
             return dish;
         }
 
-        public async Task<bool> ItemExistsByIdAsync()
-        {
-            return true;
-        }
-
         public async Task<Table> GetTableAsync(int tableId)
         {
             var table = await repository.GetByIdAsync<Table>(tableId);
@@ -120,8 +116,11 @@ namespace WaiterApplication.Core.Services
             return table;
         }
 
-        public async Task RemoveOrderDishAndOrder(int orderId, List<int> dishIds)
+        public async Task RemoveOrderDishAndOrder(int tableid,int orderId, List<int> dishIds)
         {
+            var table = await repository.GetByIdAsync<Table>(tableid);
+            table.Status = false;
+
             foreach (var id in dishIds)
             {
                 await repository.RemoveAsync<OrderDish>(id);
@@ -134,6 +133,12 @@ namespace WaiterApplication.Core.Services
         {
             await repository.RemoveAsync<OrderDish>(dishId);
             await repository.SaveChangesAsync();
+        }
+        public async Task<Order> GetOrder(int orderId)
+        {
+            var order = await repository.GetByIdAsync<Order>(orderId);
+
+            return order;
         }
     }
 }

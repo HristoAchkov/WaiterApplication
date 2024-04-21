@@ -19,7 +19,8 @@
                         <tr>
                             <th scope="col">Table</th>
                             <th scope="col">Details</th>
-                            <th scope="col">Remove</th>
+                            <th scope="col">Cancel</th>
+                            <th scope="col">Pay</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -31,10 +32,19 @@
                                     <a href="@Url.Action("Details", "Order", new { orderId = order.OrderId })" class="btn btn-primary btn-lg">Details</a>
                                 </td>
                                 <td>
-                                    <form asp-action="RemoveOrder" asp-route-orderId="@order.OrderId" method="post">
-                                        <button type="submit" class="btn btn-danger btn-lg">Remove</button>
+                                    <form asp-action="RemoveOrder" method="post">
+                                        <input type="hidden" name="orderId" value="@order.OrderId" />
+                                        <input type="hidden" name="tableId" value="@order.TableId" />
+                                        <button type="submit" class="btn btn-danger btn-lg">Cancel</button>
                                     </form>
                                 </td>
+                                <td>
+    <form asp-controller="Billing" asp-action="CalculateBill" method="get">
+        <input type="hidden" name="orderId" value="@order.OrderId" />
+        <input type="hidden" name="tableId" value="@order.TableId" />
+        <button type="submit" class="btn btn-success btn-lg">Pay</button>
+    </form>
+</td>
                             </tr>
                         }
                     </tbody>

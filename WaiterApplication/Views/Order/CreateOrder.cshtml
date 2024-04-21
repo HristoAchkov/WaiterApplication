@@ -40,4 +40,6 @@
 
     <a href="@Url.Action("AllDishesMenu", "Order", new { orderId = Model.OrderId })" class="btn btn-primary">Add Dish</a>
 </div>
-
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

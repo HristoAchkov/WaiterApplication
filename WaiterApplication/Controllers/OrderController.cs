@@ -147,12 +147,12 @@ namespace WaiterApplication.Controllers
             return RedirectToAction(nameof(All));
         }
         [HttpPost]
-        public async Task<IActionResult> RemoveOrder(int orderId)
+        public async Task<IActionResult> RemoveOrder(int tableId,int orderId)
         {
             var order = await orderService.GetOrderDetailsByIdAsync(orderId);
             List<int> dishIds = order.OrderDishes.Select(x => x.Id).ToList();
 
-            await orderService.RemoveOrderDishAndOrder(orderId, dishIds);
+            await orderService.RemoveOrderDishAndOrder(tableId,orderId, dishIds);
             return RedirectToAction(nameof(All));
         }
         [HttpPost]
