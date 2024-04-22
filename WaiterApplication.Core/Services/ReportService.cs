@@ -45,8 +45,10 @@ namespace WaiterApplication.Core.Services
                 }
             }
 
-            model.DishNames = dishOrders.Keys.ToList();
-            model.TimesOrdered = dishOrders.Values.ToList();
+            var orderedDishOrders = dishOrders.OrderByDescending(kv => kv.Value);
+
+            model.DishNames = orderedDishOrders.Select(kv => kv.Key).ToList();
+            model.TimesOrdered = orderedDishOrders.Select(kv => kv.Value).ToList();
 
             return model;
         }

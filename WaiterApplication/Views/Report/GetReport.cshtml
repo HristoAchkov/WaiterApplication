@@ -1,5 +1,7 @@
 ﻿@model ReportViewModel
 
+<link rel="stylesheet" href="~/css/Report.css" />
+
 <h2>Report Details</h2>
 
 <div>
@@ -9,31 +11,25 @@
     </dl>
 </div>
 
-@if (Model.TopDishesWithNames != null && Model.TopDishesWithNames.DishNames.Count > 0 && Model.TopDishesWithNames.TimesOrdered.Count > 0 && Model.TopDishesWithNames.DishNames.Count == Model.TopDishesWithNames.TimesOrdered.Count)
-{
-    <h3>Top 5 Dishes</h3>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Dish Name</th>
-                <th>Times Ordered</th>
-            </tr>
-        </thead>
-        <tbody>
+<div class="chart-container">
+    @if (Model.TopDishesWithNames != null && Model.TopDishesWithNames.DishNames.Count > 0 && Model.TopDishesWithNames.TimesOrdered.Count > 0 && Model.TopDishesWithNames.DishNames.Count == Model.TopDishesWithNames.TimesOrdered.Count)
+    {
+        <h3>Top 5 Dishes</h3>
+        <div class="chart">
             @for (int i = 0; i < Model.TopDishesWithNames.DishNames.Count; i++)
             {
-                <tr>
-                    <td>@Model.TopDishesWithNames.DishNames[i]</td>
-                    <td>@Model.TopDishesWithNames.TimesOrdered[i]</td>
-                </tr>
+                <div class="bar" style="width: @(Model.TopDishesWithNames.TimesOrdered[i] * 20)px">
+                    <span class="label">@Model.TopDishesWithNames.DishNames[i]</span>
+                    <span class="count">@Model.TopDishesWithNames.TimesOrdered[i]</span>
+                </div>
             }
-        </tbody>
-    </table>
-}
-else
-{
-    <p>No data available for top dishes.</p>
-}
+        </div>
+    }
+    else
+    {
+        <p>No data available for top dishes.</p>
+    }
+</div>
 
 @if (Model.TopTables != null && Model.TopTables.TableNumber.Count > 0 && Model.TopTables.OrderCount.Count > 0 && Model.TopTables.TableNumber.Count == Model.TopTables.OrderCount.Count)
 {

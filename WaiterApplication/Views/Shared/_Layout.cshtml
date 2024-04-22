@@ -20,27 +20,27 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
     <ul class="navbar-nav flex-grow-1">
         @if (User.Identity.IsAuthenticated)
-{
-    <ul class="navbar-nav flex-grow-1">
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="" asp-controller="Report" asp-action="GetReport">Get Report</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="" asp-controller="Menu" asp-action="All">All Dishes</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="" asp-controller="Table" asp-action="All">All Tables</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="" asp-controller="Order" asp-action="GetTables">Create</a>
-        </li>
-    </ul>
-}
+        {
+        <ul class="navbar-nav flex-grow-1">
+          <li class="nav-item">
+               <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link text-dark" asp-area="" asp-controller="Menu" asp-action="All">All Dishes</a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link text-dark" asp-area="" asp-controller="Table" asp-action="All">All Tables</a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link text-dark" asp-area="" asp-controller="Order" asp-action="GetTables">Create</a>
+          </li>
+        </ul>
+        }
         @if (User.IsInRole("Administrator"))
         {
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="" asp-controller="Report" asp-action="GetReport">Get Report</a>
+            </li>
             <li class="nav-item">
                 <a class="nav-link text-dark" asp-area="" asp-controller="Menu" asp-action="AddDishToMenu">Add Dish to Menu</a>
             </li>
@@ -51,11 +51,11 @@
                 <a class="nav-link text-dark" asp-area="" asp-controller="Order" asp-action="All">All Orders</a>
             </li>
             <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="" asp-controller="Inventory" asp-action="All">All Items</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="" asp-controller="Inventory" asp-action="CreateItem">Create Item</a>
-        </li>
+                <a class="nav-link text-dark" asp-area="" asp-controller="Inventory" asp-action="All">All Items</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="" asp-controller="Inventory" asp-action="CreateItem">Create Item</a>
+            </li>
         }
     </ul>
     <partial name="_LoginPartial" />
