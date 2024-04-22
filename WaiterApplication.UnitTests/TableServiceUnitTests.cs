@@ -15,6 +15,7 @@ using WaiterApplication.Core.Models.ViewModels;
 
 namespace WaiterApplication.UnitTests
 {
+    [TestFixture]
     internal class TableServiceUnitTests
     {
         private WaiterApplicationDbContext dbContext;
