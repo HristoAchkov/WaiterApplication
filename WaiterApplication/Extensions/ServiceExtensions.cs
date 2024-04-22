@@ -18,6 +18,7 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddScoped<ITableService, TableService>();
             services.AddScoped<IBillingService, BillingService>();
             services.AddScoped<IInventoryService, InventoryService>();
+            services.AddScoped<IReportService, ReportService>();
 
             return services;
         }
