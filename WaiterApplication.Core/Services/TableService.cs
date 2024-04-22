@@ -58,7 +58,8 @@ namespace WaiterApplication.Core.Services
                 {
                     Id = d.Id,
                     Name = d.TableName,
-                    Capacity = d.Capacity
+                    Capacity = d.Capacity,
+                    Status = d.Status
                 })
                 .FirstAsync();
         }

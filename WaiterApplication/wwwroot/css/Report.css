@@ -1,0 +1,22 @@
+﻿.chart-container {
+    margin-bottom: 20px;
+}
+
+.chart {
+    display: flex;
+    flex-direction: column;
+}
+
+.bar {
+    background-color: #007bff;
+    color: white;
+    padding: 5px;
+    margin-bottom: 5px;
+}
+.label {
+    font-weight: bold;
+}
+
+.count {
+    margin-left: 10px;
+}

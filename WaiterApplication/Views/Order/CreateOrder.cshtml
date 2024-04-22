@@ -1,37 +1,45 @@
-﻿@*@model List<AddDishToOrderViewModel>
+﻿@model OrderViewModel
+@inject IMenuService menuService;
 
-@{
-    ViewBag.Title = "Create Order";
-}
+<div class="container">
+    <h2>Order Details</h2>
+    <div>
+        <dl class="dl-horizontal">
+            <dt>Total Amount</dt>
+            <dd>@Model.TotalAmount.ToString("C")</dd>
+            <dt>Table Number</dt>
+            <dd>@Model.TableId</dd>
+        </dl>
+    </div>
 
-<!DOCTYPE html>
-<html>
-<head>
-    <link rel="stylesheet" href="~/css/CreateOrder.css" />
-</head>
-<body>
+    <h3>Ordered Dishes</h3>
+    @if (Model.OrderDishes.Count == 0)
+    {
+        <p>No dishes ordered yet.</p>
+    }
+    else
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var orderDish in Model.OrderDishes)
+                {
+                    <tr>
+                        <td>@orderDish.Dish.Name</td>
+                        <td>@orderDish.Dish.Price.ToString("C")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
 
-<h2>Create Order</h2>
-<hr />
-
-@foreach (var dish in Model)
-{
-    <form id="form-@dish.Id" method="post" action="@Url.Action("PlaceOrder", "Order")">
-        <input type="hidden" name="OrderedDishes" value="@dish.Id">
-        <div class="dish-item" onclick="document.getElementById('form-@dish.Id').submit()">
-            <label>
-                @dish.Name - @dish.Price
-                <div class="comment-box">
-                    <input type="text" name="Comments" placeholder="Add optional comment">
-                </div>
-            </label>
-        </div>
-    </form>
-}
-
+    <a href="@Url.Action("AllDishesMenu", "Order", new { orderId = Model.OrderId })" class="btn btn-primary">Add Dish</a>
+</div>
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
-
-</body>
-</html>*@

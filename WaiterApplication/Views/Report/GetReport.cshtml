@@ -1,0 +1,63 @@
+﻿@model ReportViewModel
+
+<link rel="stylesheet" href="~/css/Report.css" />
+
+<h2>Report Details</h2>
+
+<div>
+    <dl class="dl-horizontal">
+        <dt>Total Amount Earned</dt>
+        <dd>@Model.TotalAmountEarned.ToString("C")</dd>
+    </dl>
+</div>
+
+<div class="chart-container">
+    @if (Model.TopDishesWithNames != null && Model.TopDishesWithNames.DishNames.Count > 0 && Model.TopDishesWithNames.TimesOrdered.Count > 0 && Model.TopDishesWithNames.DishNames.Count == Model.TopDishesWithNames.TimesOrdered.Count)
+    {
+        <h3>Top 5 Dishes</h3>
+        <div class="chart">
+            @for (int i = 0; i < Model.TopDishesWithNames.DishNames.Count; i++)
+            {
+                <div class="bar" style="width: @(Model.TopDishesWithNames.TimesOrdered[i] * 20)px">
+                    <span class="label">@Model.TopDishesWithNames.DishNames[i]</span>
+                    <span class="count">@Model.TopDishesWithNames.TimesOrdered[i]</span>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <p>No data available for top dishes.</p>
+    }
+</div>
+
+@if (Model.TopTables != null && Model.TopTables.TableNumber.Count > 0 && Model.TopTables.OrderCount.Count > 0 && Model.TopTables.TableNumber.Count == Model.TopTables.OrderCount.Count)
+{
+    <h3>Top Tables</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Table Number</th>
+                <th>Order Count</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.TopTables.TableNumber.Count; i++)
+            {
+                <tr>
+                    <td>@Model.TopTables.TableNumber[i]</td>
+                    <td>@Model.TopTables.OrderCount[i]</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No data available for top tables.</p>
+}
+
+@if (Model == null || Model.TotalAmountEarned == 0)
+{
+    <p>No data available for total amount earned.</p>
+}

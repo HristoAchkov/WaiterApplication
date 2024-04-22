@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WaiterApplication.Core.Contracts;
+using WaiterApplication.Core.Models.ViewModels;
 using WaiterApplication.Core.Services;
 
 namespace WaiterApplication.Controllers
@@ -14,13 +15,34 @@ namespace WaiterApplication.Controllers
             billingService = _billingService;
             orderService = _orderService;
         }
-        public Task CalculateBill()
+        [HttpGet]
+        public async Task<IActionResult> CalculateBill(int orderId)
         {
-            return null;
+            var billModel = await billingService.CalculateBill(orderId);
+            var bill = await billingService.CreateBill(billModel);
+            billModel.Id = bill.Id;
+
+            return View(billModel);
         }
-        public Task<IActionResult> InitiatePayment()
+        [HttpPost]
+        public async Task<IActionResult> CalculateBillConfirm(int billId)
         {
-            return null;
+            if (await billingService.BillExistsAsync(billId.ToString()) == false)
+            {
+                return BadRequest();
+            }
+
+            var bill = await billingService.BillDetailsByIdAsync(billId);
+            var order = await orderService.GetOrder(bill.OrderId);
+
+            if (order != null)
+            {
+                await billingService.IsOrderPaid(order.Id);
+            }
+
+            await billingService.RemoveBill(billId);
+
+            return RedirectToAction("GetTables","Order");
         }
     }
 }

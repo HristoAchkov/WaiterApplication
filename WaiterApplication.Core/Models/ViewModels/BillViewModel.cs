@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,9 +7,10 @@ using WaiterApplication.Infrastructure.Data.Models;
 
 namespace WaiterApplication.Core.Models.ViewModels
 {
-    public class OrderFormModel
+    public class BillViewModel
     {
-        public int TableId { get; set; }
-        public ICollection<AddDishToOrderViewModel> AvailableDishes { get; set; } = new List<AddDishToOrderViewModel>();
+        public int Id { get; set; }
+        public decimal TotalAmount { get; set; }
+        public int OrderId { get; set; }
     }
 }

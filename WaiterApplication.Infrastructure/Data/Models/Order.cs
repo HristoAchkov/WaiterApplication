@@ -25,5 +25,6 @@ namespace WaiterApplication.Infrastructure.Data.Models
         public Table Table { get; set; } = null!;
 
         public ICollection<OrderDish> OrderedDishes { get; set; } = new List<OrderDish>();
+        public bool IsPaid { get; set; }
     }
 }
