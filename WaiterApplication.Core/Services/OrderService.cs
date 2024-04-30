@@ -53,7 +53,8 @@ namespace WaiterApplication.Core.Services
                     OrderId = o.Id,
                     TableNumber = o.Table.TableName,
                     TotalAmount = o.TotalAmount,
-                    TableId = o.Table.Id
+                    TableId = o.Table.Id,
+                    CreatedOn = o.CreatedOn
                 })
                 .ToListAsync();
 
@@ -96,7 +97,8 @@ namespace WaiterApplication.Core.Services
             {
                 OrderId = order.Id,
                 TableId = order.TableNumber,
-                OrderDishes = orderDish
+                OrderDishes = orderDish,
+                CreatedOn = order.CreatedOn
             };
 
             return orderViewModel;

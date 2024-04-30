@@ -15,5 +15,6 @@ namespace WaiterApplication.Core.Models.ViewModels
         public decimal TotalAmount { get; set; }
         public int OrderId { get; set; }
         public int TableId { get; set; }
+        public DateTime CreatedOn { get; set; }
     }
 }

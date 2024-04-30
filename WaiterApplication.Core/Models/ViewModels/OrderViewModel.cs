@@ -16,5 +16,6 @@ namespace WaiterApplication.Core.Models.ViewModels
             get => OrderDishes.Sum(x => x.Dish.Price * x.Quantity);
         }
         public List<OrderDish> OrderDishes { get; set; }
+        public DateTime CreatedOn { get; set; }
     }
 }
