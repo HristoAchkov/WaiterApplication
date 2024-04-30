@@ -12,5 +12,14 @@ namespace WaiterApplication.Core.Contracts
         Task<decimal> TotalAmountEarned();
         Task<TopDishesModel> GetTopDishes();
         Task<TopTablesModel> GetTopTables();
+        Task<decimal> DailyAmountEarned();
+        Task<TopDishesModel> GetDailyTopDishes();
+        Task<TopTablesModel> GetDailyTopTables();
+        Task<decimal> WeeklyAmountEarned();
+        Task<TopDishesModel> GetWeeklyTopDishes();
+        Task<TopTablesModel> GetWeeklyTopTables();
+        Task<decimal> MonthlyAmountEarned();
+        Task<TopDishesModel> GetMonthlyTopDishes();
+        Task<TopTablesModel> GetMonthlyTopTables();
     }
 }

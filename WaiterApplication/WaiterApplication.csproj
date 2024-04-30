@@ -27,4 +27,8 @@
     <Folder Include="Areas\Identity\Data\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="Views\Report\DailyReport.cshtml" />
+  </ItemGroup>
+
 </Project>

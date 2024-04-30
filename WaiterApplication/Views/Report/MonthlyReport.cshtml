@@ -2,15 +2,11 @@
 
 <link rel="stylesheet" href="~/css/Report.css" />
 
-<h2>Report Details</h2>
-
-<a href="@Url.Action("DailyReport", "Report")">View Daily Report</a>
-<a href="@Url.Action("WeeklyReport", "Report")">View Weekly Report</a>
-<a href="@Url.Action("MonthlyReport", "Report")">View Monthly Report</a>
+<h2>Daily Report Details</h2>
 
 <div>
     <dl class="dl-horizontal">
-        <dt>Total Amount Earned</dt>
+        <dt>Daily Amount Earned</dt>
         <dd>@Model.TotalAmountEarned.ToString("C")</dd>
     </dl>
 </div>
@@ -18,7 +14,7 @@
 <div class="chart-container">
     @if (Model.TopDishesWithNames != null && Model.TopDishesWithNames.DishNames.Count > 0 && Model.TopDishesWithNames.TimesOrdered.Count > 0 && Model.TopDishesWithNames.DishNames.Count == Model.TopDishesWithNames.TimesOrdered.Count)
     {
-        <h3>Top 5 Dishes</h3>
+        <h3>Top 5 Dishes Today</h3>
         <div class="chart">
             @for (int i = 0; i < Model.TopDishesWithNames.DishNames.Count; i++)
             {
@@ -38,7 +34,7 @@
 
 @if (Model.TopTables != null && Model.TopTables.TableNumber.Count > 0 && Model.TopTables.OrderCount.Count > 0 && Model.TopTables.TableNumber.Count == Model.TopTables.OrderCount.Count)
 {
-    <h3>Top 3 Tables</h3>
+    <h3>Top 3 Tables Today</h3>
     <table class="table">
         <thead>
             <tr>
@@ -66,3 +62,4 @@ else
 {
     <p>No data available for total amount earned.</p>
 }
+

@@ -35,5 +35,60 @@ namespace WaiterApplication.Controllers
 
             return View(model);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> DailyReport()
+        {
+            var totalAmount = await reportService.DailyAmountEarned();
+
+            var topDishes = await reportService.GetDailyTopDishes();
+
+            var topTables = await reportService.GetDailyTopTables();
+
+            ReportViewModel model = new ReportViewModel()
+            {
+                TotalAmountEarned = totalAmount,
+                TopDishesWithNames = topDishes,
+                TopTables = topTables
+            };
+
+            return View(model);
+        }
+        [HttpGet]
+        public async Task<IActionResult> WeeklyReport()
+        {
+            var totalAmount = await reportService.DailyAmountEarned();
+
+            var topDishes = await reportService.GetDailyTopDishes();
+
+            var topTables = await reportService.GetDailyTopTables();
+
+            ReportViewModel model = new ReportViewModel()
+            {
+                TotalAmountEarned = totalAmount,
+                TopDishesWithNames = topDishes,
+                TopTables = topTables
+            };
+
+            return View(model);
+        }
+        [HttpGet]
+        public async Task<IActionResult> MonthlyReport()
+        {
+            var totalAmount = await reportService.DailyAmountEarned();
+
+            var topDishes = await reportService.GetDailyTopDishes();
+
+            var topTables = await reportService.GetDailyTopTables();
+
+            ReportViewModel model = new ReportViewModel()
+            {
+                TotalAmountEarned = totalAmount,
+                TopDishesWithNames = topDishes,
+                TopTables = topTables
+            };
+
+            return View(model);
+        }
     }
 }
