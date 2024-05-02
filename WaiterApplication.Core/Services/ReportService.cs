@@ -259,10 +259,10 @@ namespace WaiterApplication.Core.Services
 
             DateTime endDate = startDate.AddMonths(1).AddDays(-1);
 
-            var orders = await repository.AllAsNoTracking<Order>()
+            var orders = repository.AllAsNoTracking<Order>()
                 .Where(o => o.IsPaid && o.CreatedOn.Date >= startDate && o.CreatedOn.Date <= endDate)
-                .Include(o => o.Table)
-                .ToListAsync();
+                .Include(o => o.OrderedDishes)
+            .ThenInclude(od => od.Dish);
 
             decimal totalAmountEarned = 0;
 
@@ -281,10 +281,10 @@ namespace WaiterApplication.Core.Services
 
             DateTime endDate = startDate.AddMonths(1).AddDays(-1);
 
-            var orders = await repository.AllAsNoTracking<Order>()
+            var orders = repository.AllAsNoTracking<Order>()
                 .Where(o => o.IsPaid && o.CreatedOn.Date >= startDate && o.CreatedOn.Date <= endDate)
-                .Include(o => o.Table)
-                .ToListAsync();
+                .Include(o => o.OrderedDishes)
+            .ThenInclude(od => od.Dish);
 
             var model = new TopDishesModel();
             var dishOrders = new Dictionary<string, int>();
