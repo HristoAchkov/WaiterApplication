@@ -24,7 +24,7 @@ namespace WaiterApplication.Core.Services
 
         public async Task<List<TableViewModel>> AllAsync(TableStatus status = TableStatus.Vacant)
         {
-            var tablesToShow = repository.AllAsNoTracking<Table>()
+            var tablesToShow = await repository.AllAsNoTracking<Table>()
                 .Select(t => new TableViewModel
                 {
                     Id = t.Id,
@@ -34,7 +34,7 @@ namespace WaiterApplication.Core.Services
                 })
                 .ToListAsync();
 
-            return await tablesToShow;
+            return tablesToShow;
         }
 
         public async Task CreateTableAsync(string name, int capacity, bool status)
