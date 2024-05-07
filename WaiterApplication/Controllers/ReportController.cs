@@ -57,11 +57,11 @@ namespace WaiterApplication.Controllers
         [HttpGet]
         public async Task<IActionResult> WeeklyReport()
         {
-            var totalAmount = await reportService.DailyAmountEarned();
+            var totalAmount = await reportService.WeeklyAmountEarned();
 
-            var topDishes = await reportService.GetDailyTopDishes();
+            var topDishes = await reportService.GetWeeklyTopDishes();
 
-            var topTables = await reportService.GetDailyTopTables();
+            var topTables = await reportService.GetWeeklyTopTables();
 
             ReportViewModel model = new ReportViewModel()
             {
@@ -75,11 +75,11 @@ namespace WaiterApplication.Controllers
         [HttpGet]
         public async Task<IActionResult> MonthlyReport()
         {
-            var totalAmount = await reportService.DailyAmountEarned();
+            var totalAmount = await reportService.MonthlyAmountEarned();
 
-            var topDishes = await reportService.GetDailyTopDishes();
+            var topDishes = await reportService.GetMonthlyTopDishes();
 
-            var topTables = await reportService.GetDailyTopTables();
+            var topTables = await reportService.GetMonthlyTopTables();
 
             ReportViewModel model = new ReportViewModel()
             {

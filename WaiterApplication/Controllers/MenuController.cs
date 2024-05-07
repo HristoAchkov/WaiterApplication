@@ -14,8 +14,7 @@ using static WaiterApplication.Infrastructure.Constants.DataConstants;
 
 namespace WaiterApplication.Controllers
 {
-    [Authorize(Roles = AdminRole)]
-    public class MenuController : BaseController
+    public class MenuController : BaseAdminController
     {
         private readonly IMenuService menuService;
         public MenuController(IMenuService _menuService)
