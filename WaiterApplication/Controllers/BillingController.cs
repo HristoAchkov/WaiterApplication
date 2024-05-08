@@ -5,7 +5,7 @@ using WaiterApplication.Core.Services;
 
 namespace WaiterApplication.Controllers
 {
-    public class BillingController : BaseController
+    public class BillingController : BaseAdminController
     {
         private readonly IBillingService billingService;
         private readonly IOrderService orderService;

@@ -21,6 +21,7 @@
                             <th scope="col">Details</th>
                             <th scope="col">Cancel</th>
                             <th scope="col">Pay</th>
+                            <th scope="col">Created On</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -45,6 +46,7 @@
         <button type="submit" class="btn btn-success btn-lg">Pay</button>
     </form>
 </td>
+<td>@order.CreatedOn.ToString("dd-MM-yyyy HH:mm")</td>
                             </tr>
                         }
                     </tbody>

@@ -73,7 +73,8 @@ namespace WaiterApplication.Controllers
             var model = new Order()
             {
                 TableNumber = tableId,
-                OrderedDishes = order.OrderDishes
+                OrderedDishes = order.OrderDishes,
+                CreatedOn = DateTime.Now
             };
             await orderService.CreateOrderAsync(model);
             order.OrderId = model.Id;

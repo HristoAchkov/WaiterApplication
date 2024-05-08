@@ -8,8 +8,7 @@ using static WaiterApplication.Infrastructure.Constants.DataConstants;
 
 namespace WaiterApplication.Controllers
 {
-    [Authorize(Roles = AdminRole)]
-    public class InventoryController : BaseController
+    public class InventoryController : BaseAdminController
     {
         private readonly IInventoryService inventoryService;
         public InventoryController(IInventoryService _inventoryService)

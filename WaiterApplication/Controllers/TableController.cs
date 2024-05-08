@@ -5,7 +5,7 @@ using WaiterApplication.Extensions;
 
 namespace WaiterApplication.Controllers
 {
-    public class TableController : BaseController
+    public class TableController : BaseAdminController
     {
         private readonly ITableService tableService;
         public TableController(ITableService _tableService)
