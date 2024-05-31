@@ -1,13 +1,15 @@
-﻿@model IEnumerable<AllDishesOrder>
+﻿@model OrdersAndPromotionsServiceModel
+@inject IMenuService menuService;
 
 <hr />
 
 <div class="row justify-content-center">
-    @foreach (var dish in Model)
+    <!-- Display Dishes -->
+    @foreach (var dish in Model.Dishes)
     {
         <div class="col-md-4"> 
             <div class="card mb-3">
-                 @if (!string.IsNullOrEmpty(dish.Image))
+                @if (!string.IsNullOrEmpty(dish.Image))
                 {
                     <img class="card-img-top" src="@dish.Image" alt="Dish Image" style="height: 415px; width: 415px; object-fit: cover;">
                 }
@@ -23,7 +25,7 @@
                     <br />
                     <form asp-controller="Order" asp-action="AddDish" method="post">
                         <input type="hidden" name="dishId" value="@dish.Id" />
-                         <input type="hidden" name="orderId" value="@dish.OrderId" />
+                        <input type="hidden" name="orderId" value="@dish.OrderId" />
                         <div class="mb-3">
                             <label for="comment" class="form-label">Comment (optional)</label>
                             <textarea class="form-control" id="comment" name="comment" rows="3"></textarea>
@@ -34,4 +36,36 @@
             </div>
         </div>
     }
-</div>
+    
+    <!-- Display Promotions -->
+    @foreach (var promotion in Model.Promotions)
+{
+    <div class="col-md-4"> 
+        <div class="card mb-3">
+            <div class="card-body text-center">
+                <h4>@promotion.Name</h4>
+                <h6>Price: <b>@promotion.Price.ToString("C2")</b></h6>
+                @if (promotion.Dishes.Any())
+                {
+                    <h6>Dishes Included:</h6>
+                    <ul>
+                        @foreach (var promoDish in promotion.Dishes)
+                        {
+                            var dish = await menuService.GetDishDetailsByIdAsync(promoDish.DishId);
+                            <li>@dish.Name - $@dish.Price</li>
+                        }
+                    </ul>
+                }
+                <br />
+                <form asp-controller="Order" asp-action="AddPromotion" method="post">
+                    <input type="hidden" name="promotionId" value="@promotion.Id" />
+                    <div class="mb-3">
+                        <label for="comment" class="form-label">Comment (optional)</label>
+                        <textarea class="form-control" id="comment" name="comment" rows="3"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-success">Add Promotion</button>
+                </form>
+            </div>
+        </div>
+    </div>
+}

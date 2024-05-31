@@ -6,6 +6,7 @@ using NuGet.Protocol.Core.Types;
 using NuGet.Versioning;
 using System.Collections.Immutable;
 using System.Collections.Specialized;
+using System.Runtime.InteropServices;
 using WaiterApplication.Core.Contracts;
 using WaiterApplication.Core.Enumerations;
 using WaiterApplication.Core.Models.QueryModels;
@@ -20,13 +21,16 @@ namespace WaiterApplication.Controllers
         private readonly IOrderService orderService;
         private readonly ITableService tableService;
         private readonly IMenuService menuService;
+        private readonly IPromotionService promotionService;
         public OrderController(IOrderService _orderService,
             ITableService _tableService,
-            IMenuService _menuService)
+            IMenuService _menuService,
+            IPromotionService _promotionService)
         {
             orderService = _orderService;
             tableService = _tableService;
             menuService = _menuService;
+            promotionService = _promotionService;
         }
         [HttpGet]
         public async Task<IActionResult> All(List<AllOrdersViewModel> model)
@@ -85,8 +89,15 @@ namespace WaiterApplication.Controllers
         public async Task<IActionResult> AllDishesMenu(int orderId)
         {
             var dishes = await orderService.AllDishes(orderId);
+            var promotions = await promotionService.AllPromotions();
 
-            return View(dishes);
+            var combo = new OrdersAndPromotionsServiceModel()
+            {
+                Dishes = dishes,
+                Promotions = promotions
+            };
+
+            return View(combo);
         }
         [HttpPost]
         public async Task<IActionResult> AddDish(int dishId,int orderId, string? comment)
