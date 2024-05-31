@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WaiterApplication.Infrastructure.Data;
 
@@ -11,9 +12,10 @@ using WaiterApplication.Infrastructure.Data;
 namespace WaiterApplication.Infrastructure.Migrations
 {
     [DbContext(typeof(WaiterApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240502154136_PromotionAdded")]
+    partial class PromotionAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -381,33 +383,6 @@ namespace WaiterApplication.Infrastructure.Migrations
                     b.ToTable("OrderDishes");
                 });
 
-            modelBuilder.Entity("WaiterApplication.Infrastructure.Data.Models.PromoDish", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasComment("Promotion Dish Identifier");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("DishId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PromotionId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DishId");
-
-                    b.HasIndex("PromotionId");
-
-                    b.ToTable("PromoDishes");
-                });
-
             modelBuilder.Entity("WaiterApplication.Infrastructure.Data.Models.Promotion", b =>
                 {
                     b.Property<int>("Id")
@@ -416,19 +391,20 @@ namespace WaiterApplication.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("Name")
+                    b.Property<string>("Code")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("OrderId")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("Price")
+                    b.Property<decimal>("DiscountAmount")
                         .HasColumnType("decimal(18,2)");
 
-                    b.HasKey("Id");
+                    b.Property<DateTime>("ValidFrom")
+                        .HasColumnType("datetime2");
 
-                    b.HasIndex("OrderId");
+                    b.Property<DateTime>("ValidTo")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
 
                     b.ToTable("Promotions");
                 });
@@ -553,42 +529,9 @@ namespace WaiterApplication.Infrastructure.Migrations
                     b.Navigation("Order");
                 });
 
-            modelBuilder.Entity("WaiterApplication.Infrastructure.Data.Models.PromoDish", b =>
-                {
-                    b.HasOne("WaiterApplication.Infrastructure.Data.Models.Dish", "Dish")
-                        .WithMany()
-                        .HasForeignKey("DishId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("WaiterApplication.Infrastructure.Data.Models.Promotion", "Promotion")
-                        .WithMany("Dishes")
-                        .HasForeignKey("PromotionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Dish");
-
-                    b.Navigation("Promotion");
-                });
-
-            modelBuilder.Entity("WaiterApplication.Infrastructure.Data.Models.Promotion", b =>
-                {
-                    b.HasOne("WaiterApplication.Infrastructure.Data.Models.Order", "Order")
-                        .WithMany()
-                        .HasForeignKey("OrderId");
-
-                    b.Navigation("Order");
-                });
-
             modelBuilder.Entity("WaiterApplication.Infrastructure.Data.Models.Order", b =>
                 {
                     b.Navigation("OrderedDishes");
-                });
-
-            modelBuilder.Entity("WaiterApplication.Infrastructure.Data.Models.Promotion", b =>
-                {
-                    b.Navigation("Dishes");
                 });
 #pragma warning restore 612, 618
         }

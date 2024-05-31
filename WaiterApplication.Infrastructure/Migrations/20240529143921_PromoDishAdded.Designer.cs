@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WaiterApplication.Infrastructure.Data;
 
@@ -11,9 +12,10 @@ using WaiterApplication.Infrastructure.Data;
 namespace WaiterApplication.Infrastructure.Migrations
 {
     [DbContext(typeof(WaiterApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240529143921_PromoDishAdded")]
+    partial class PromoDishAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -292,7 +294,12 @@ namespace WaiterApplication.Infrastructure.Migrations
                         .HasColumnType("decimal(18,2)")
                         .HasComment("Dish price");
 
+                    b.Property<int?>("PromotionId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("PromotionId");
 
                     b.ToTable("Dishes");
                 });
@@ -420,15 +427,10 @@ namespace WaiterApplication.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("OrderId")
-                        .HasColumnType("int");
-
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("OrderId");
 
                     b.ToTable("Promotions");
                 });
@@ -523,6 +525,13 @@ namespace WaiterApplication.Infrastructure.Migrations
                     b.Navigation("Order");
                 });
 
+            modelBuilder.Entity("WaiterApplication.Infrastructure.Data.Models.Dish", b =>
+                {
+                    b.HasOne("WaiterApplication.Infrastructure.Data.Models.Promotion", null)
+                        .WithMany("Dishes")
+                        .HasForeignKey("PromotionId");
+                });
+
             modelBuilder.Entity("WaiterApplication.Infrastructure.Data.Models.Order", b =>
                 {
                     b.HasOne("WaiterApplication.Infrastructure.Data.Models.Table", "Table")
@@ -562,7 +571,7 @@ namespace WaiterApplication.Infrastructure.Migrations
                         .IsRequired();
 
                     b.HasOne("WaiterApplication.Infrastructure.Data.Models.Promotion", "Promotion")
-                        .WithMany("Dishes")
+                        .WithMany()
                         .HasForeignKey("PromotionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -570,15 +579,6 @@ namespace WaiterApplication.Infrastructure.Migrations
                     b.Navigation("Dish");
 
                     b.Navigation("Promotion");
-                });
-
-            modelBuilder.Entity("WaiterApplication.Infrastructure.Data.Models.Promotion", b =>
-                {
-                    b.HasOne("WaiterApplication.Infrastructure.Data.Models.Order", "Order")
-                        .WithMany()
-                        .HasForeignKey("OrderId");
-
-                    b.Navigation("Order");
                 });
 
             modelBuilder.Entity("WaiterApplication.Infrastructure.Data.Models.Order", b =>
