@@ -17,5 +17,7 @@ namespace WaiterApplication.Infrastructure.Data
         public DbSet<Bill> Bills { get; set; } = null!;
         public DbSet<InventoryItem> InventoryItems { get; set; } = null!;
         public DbSet<OrderDish> OrderDishes { get; set; } = null!;
+        public DbSet<Promotion> Promotions { get; set; } = null!;
+        public DbSet<PromoDish> PromoDishes { get; set; } = null!;
     }
 }
