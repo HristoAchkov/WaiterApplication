@@ -131,5 +131,27 @@ namespace WaiterApplication.Controllers
 
             return RedirectToAction(nameof(AllPromotions));
         }
+        [HttpGet]
+        public async Task<IActionResult> AddAnotherDish(int promotionId)
+        {
+            var allDishes = await promotionService.GetDishes();
+
+            ViewBag.PromotionId = promotionId;
+
+            return View(allDishes);
+        }
+        [HttpGet]
+        public async Task<IActionResult> AddAnotherDishPost(int dishId, int promotionId)
+        {
+            var promoDish = new PromoDish()
+            {
+                DishId = dishId,
+                PromotionId = promotionId,
+            };
+
+            await promotionService.AddPromoDishToPromo(dishId, promoDish.PromotionId);
+
+            return RedirectToAction(nameof(AllPromotions));
+        }
     }
 }

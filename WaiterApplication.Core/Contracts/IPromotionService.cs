@@ -12,6 +12,7 @@ namespace WaiterApplication.Core.Contracts
     public interface IPromotionService
     {
         Task AddDishToPromo(int dishId, int promoId);
+        Task AddPromoDishToPromo(int dishId, int promoId);
         Task<List<AllDishesServiceModel>> GetDishes();
         Task CreatePromotion(Promotion promotion);
         Task<List<AllPromotionsViewModel>> AllPromotions();

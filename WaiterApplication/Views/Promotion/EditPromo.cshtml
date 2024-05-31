@@ -22,25 +22,30 @@
     <hr />
     <div class="row">
         @foreach (var promoDish in Model.Dishes)
-{
-    var dish = promoDish.Dish;
-    <div class="col-md-4">
-        <div class="card mb-3">
-            <div class="card-body text-center">
-                <img src="@dish.Image" alt="@dish.Name" class="img-fluid" style="height: 150px; object-fit: cover;" />
-                <h5 class="card-title">@dish.Name</h5>
-                <p class="card-text">@dish.Description</p>
-                <p class="card-text">Price: $@dish.Price</p>
+        {
+            var dish = promoDish.Dish;
+            <div class="col-md-4">
+                <div class="card mb-3">
+                    <div class="card-body text-center">
+                        <img src="@dish.Image" alt="@dish.Name" class="img-fluid" style="height: 150px; object-fit: cover;" />
+                        <h5 class="card-title">@dish.Name</h5>
+                        <p class="card-text">@dish.Description</p>
+                        <p class="card-text">Price: $@dish.Price</p>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-}
+        }
     </div>
 
     <div class="form-group text-center">
         <button type="submit" class="btn btn-primary">Save Changes</button>
         <a asp-controller="Promotion" asp-action="AllPromotions" class="btn btn-secondary">Cancel</a>
     </div>
+</form>
+
+<form asp-controller="Promotion" asp-action="AddAnotherDish" method="get" class="text-center mt-4">
+    <input type="hidden" name="promotionId" value="@Model.Id" />
+    <button type="submit" class="btn btn-success">Add Another</button>
 </form>
 
 @section Scripts {

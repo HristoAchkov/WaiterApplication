@@ -63,6 +63,22 @@ namespace WaiterApplication.Core.Services
 
             await repository.SaveChangesAsync();
         }
+        public async Task AddPromoDishToPromo(int dishId, int promoId)
+        {
+            var promo = await repository.GetByIdAsync<Promotion>(promoId);
+
+            var promoDish = new PromoDish()
+            {
+                DishId = dishId,
+                PromotionId = promoId
+            };
+
+            repository.AddAsync<PromoDish>(promoDish);
+
+            promo.Dishes.Add(promoDish);
+
+            await repository.SaveChangesAsync();
+        }
 
         public async Task<List<AllPromotionsViewModel>> AllPromotions()
         {
