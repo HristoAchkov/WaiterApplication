@@ -1,0 +1,28 @@
+﻿.item-list {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.item {
+    width: 200px;
+    margin: 10px; 
+    text-align: center; 
+}
+
+.item-image {
+    width: 200px;
+    height: 200px;
+}
+.item p {
+    font-size: 18px;
+}
+.add-button {
+    padding: 5px 10px;
+    background-color: #007bff; 
+    color: #fff; 
+    border: none;
+    cursor: pointer;
+}
+.add-button:hover {
+    background-color: #0056b3; 
+}
