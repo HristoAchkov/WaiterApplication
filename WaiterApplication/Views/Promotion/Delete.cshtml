@@ -1,0 +1,58 @@
+﻿@model PromoDetailsServiceModel
+@inject IMenuService menuService;
+
+<h2>Delete Promotion</h2>
+<hr />
+
+<div>
+    <h4>Promotion Details</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">ID:</dt>
+        <dd class="col-sm-10">@Model.Id</dd>
+
+        <dt class="col-sm-2">Name:</dt>
+        <dd class="col-sm-10">@Model.Name</dd>
+
+        <dt class="col-sm-2">Price:</dt>
+        <dd class="col-sm-10">$@Model.Price</dd>
+
+        <dt class="col-sm-2">Dishes:</dt>
+        <dd class="col-sm-10">
+            <ul>
+                @foreach (var promoDish in Model.Dishes)
+                {
+                 var dish = await menuService.GetDishDetailsByIdAsync(promoDish.DishId);
+                 <li>
+                 <img src="@dish.Image" alt="@dish.Name" style="max-width: 100px;" />
+                         @dish.Name - $@dish.Price
+                 </li>
+                 }
+            </ul>
+        </dd>
+    </dl>
+</div>
+
+<form asp-controller="Promotion" asp-action="Delete" method="post">
+    <input type="hidden" asp-for="Id" />
+    <input type="hidden" asp-for="Name" />
+    <input type="hidden" asp-for="Price" />
+    
+     @for (int i = 0; i < Model.Dishes.Count; i++)
+    {
+        var dish = await menuService.GetDishDetailsByIdAsync(Model.Dishes[i].DishId);
+        <input type="hidden" name="Dishes[@i].Id" value="@Model.Dishes[i].Id" />
+        <input type="hidden" name="Dishes[@i].DishId" value="@dish.Id" />
+        <input type="hidden" name="Dishes[@i].Name" value="@dish.Name" />
+        <input type="hidden" name="Dishes[@i].Description" value="@dish.Description" />
+        <input type="hidden" name="Dishes[@i].Image" value="@dish.Image" />
+        <input type="hidden" name="Dishes[@i].Price" value="@dish.Price" />
+        <input type="hidden" name="Dishes[@i].Ingredients" value="@dish.Ingredients" />
+    }
+
+
+    <div class="form-group">
+        <input type="submit" value="Delete" class="btn btn-danger" />
+        <a asp-controller="Promotion" asp-action="AllPromotions" class="btn btn-secondary">Back</a>
+    </div>
+</form>

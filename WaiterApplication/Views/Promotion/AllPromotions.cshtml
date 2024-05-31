@@ -1,0 +1,44 @@
+﻿@model IEnumerable<AllPromotionsViewModel>
+
+<h2 class="text-center">Promotions</h2>
+<hr />
+
+<div class="row">
+    @foreach (var promotion in Model)
+    {
+        <div class="col-md-4">
+            <div class="card mb-3">
+                <div class="card-body text-center">
+                    <h5 class="card-title">@promotion.Name</h5>
+                    <p class="card-text">Price: $@promotion.Price</p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    @foreach (var promoDish in promotion.Dishes)
+{
+    <li class="list-group-item">
+        <div class="d-flex align-items-center">
+            <img src="@promoDish.Dish.Image" class="mr-3" alt="@promoDish.Dish.Name" style="max-width: 50px;">
+            <div>
+                <h6>@promoDish.Dish.Name</h6>
+                <p>$@promoDish.Dish.Price</p>
+            </div>
+        </div>
+    </li>
+}
+                </ul>
+                 <div class="card-body text-center">
+                    <div class="btn-group">
+                        <form asp-controller="Promotion" asp-action="EditPromo" method="get">
+                            <input type="hidden" name="id" value="@promotion.Id" />
+                            <button type="submit" class="btn btn-primary mr-2">Edit</button>
+                        </form>
+                        <form asp-controller="Promotion" asp-action="Delete" method="get">
+                            <input type="hidden" name="id" value="@promotion.Id" />
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

@@ -1,0 +1,36 @@
+﻿@model List<AllDishesServiceModel>
+
+<link rel="stylesheet" href="~/css/AllDishes.css" />
+
+<h2>Dishes</h2>
+
+@foreach (var dish in Model)
+{
+    <div class="col-md-4 mb-3">
+        <div class="card h-100">
+            @if (!string.IsNullOrEmpty(dish.Image))
+            {
+                <img class="card-img-top" src="@dish.Image" alt="@dish.Name" style="height: 200px; object-fit: cover;">
+            }
+            <div class="card-body text-center">
+                <h5 class="card-title">@dish.Name</h5>
+                <p class="card-text">Price: $@dish.Price</p>
+                <form method="get" action="@Url.Action("CreatePromotion", "Promotion")">
+                    <input type="hidden" name="dishId" value="@dish.Id" />
+                    <button type="submit" class="btn btn-primary">Add</button>
+                </form>
+            </div>
+        </div>
+    </div>
+}
+
+<style>
+    .card {
+        width: 300px;
+    }
+    .card-img-top {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+    }
+</style>

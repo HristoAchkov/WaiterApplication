@@ -1,0 +1,45 @@
+﻿@model Promotion
+
+@{
+    ViewBag.Title = "Promotion Details";
+}
+
+<h2>Promotion Details</h2>
+<hr />
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Promotion Summary</h5>
+        <p><strong>Promotion Name:</strong> @Model.Name</p>
+        <p>Price: $@Model.Price</p>
+        <h6>Dishes Included:</h6>
+        <div class="dishes">
+            @foreach (var promoDish in Model.Dishes)
+{
+    var dish = promoDish.Dish;
+    <div class="dish">
+        <h5>@dish.Name</h5>
+        <p><strong>Description:</strong> @dish.Description</p>
+        <p><strong>Price:</strong> $@dish.Price</p>
+        @if (!string.IsNullOrEmpty(dish.Image))
+        {
+            <p><img src="@dish.Image" alt="@dish.Name" style="max-width: 200px;" /></p>
+        }
+        @if (!string.IsNullOrEmpty(dish.Ingredients))
+        {
+            <p><strong>Ingredients:</strong> @dish.Ingredients</p>
+        }
+    </div>
+    <hr />
+}
+        </div>
+    </div>
+</div>
+
+<a href="@Url.Action("Index", "Home")" class="btn btn-primary">Back to Home</a>
+
+<style>
+    .dishes .dish {
+        margin-bottom: 20px;
+    }
+</style>
