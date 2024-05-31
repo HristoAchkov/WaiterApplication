@@ -2,6 +2,7 @@
 using WaiterApplication.Core.Models.QueryModels;
 using WaiterApplication.Core.Models.ViewModel;
 using WaiterApplication.Core.Models.ViewModels;
+using WaiterApplication.Infrastructure.Data.Models;
 
 namespace WaiterApplication.Core.Contracts
 {
@@ -18,5 +19,6 @@ namespace WaiterApplication.Core.Contracts
         Task<DishDetailsServiceModel> DishDetailsByIdAsync(int id);
         Task EditAsync(int dishId, DishFormModel model);
         Task DeleteAsync(int id);
+        Task<Dish> GetDishDetailsByIdAsync(int id);
     }
 }

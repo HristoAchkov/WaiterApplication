@@ -142,5 +142,11 @@ namespace WaiterApplication.Core.Services
 
             return dishesToShow;
         }
+        public async Task<Dish> GetDishDetailsByIdAsync(int id)
+        {
+            var dish = await repository.GetByIdAsync<Dish>(id);
+
+            return dish;
+        }
     }
 }
